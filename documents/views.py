@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import Documents
 from .serializers import DocumentSerializer
+from .pagination import CustomPagination
 from rest_framework import permissions
 
 
@@ -9,6 +10,7 @@ from rest_framework import permissions
 class DocumentList(ListCreateAPIView):
     serializer_class = DocumentSerializer
     permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = CustomPagination
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
