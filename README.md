@@ -28,16 +28,31 @@ Hadron Collider (LHC) experiments.
 
 Once you have downloaded/cloned this repository, please set this folder as your current working directory and follow the
 below instructions (Windows
+
 - [Alternative Operating Systems](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)):
 
 **Create a new Virtual Environment:**
+
 ```zsh
 python -m venv venv
 ```
 
+**Enter the Virtual Environment:**
+
+```zsh
+.\venv\Scripts\activate
+```
+
 **Install dependencies required by this application:**
+
 ```zsh
 pip install -r requirements.txt
+```
+
+**Running the Django Server:**
+
+```zsh
+python manage.py runserver
 ```
 
 ## 2. Endpoints
@@ -45,9 +60,10 @@ pip install -r requirements.txt
 All API endpoints for the CERN API application are available at the ``/api/v1/{endpoint}`` path of the domain Django is
 listening on (In the case of localhost, this will likely be ``http://127.0.0.1:8000/api/v1/``). With ``{endpoint}``
 representing one of the endpoints listed in the below tables.
+
 ### 2.1 Authentication
-Endpoint | HTTP Method | Action
--- | -- | --
+
+Endpoint | HTTP Method | Action -- | -- | --
 `authentication/register` | POST | Registers a new user with the provided login credentials.
 `authentication/token` | GET | Fetches an access and refresh token for the user with the provided login credentials.
 `authentication/token/refresh` | GET | Fetches a new access token for the user associated with the supplied refresh token.
