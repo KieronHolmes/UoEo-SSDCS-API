@@ -1,9 +1,12 @@
-from django.shortcuts import render
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import Documents
-from .serializers import DocumentSerializer
-from .pagination import CustomPagination
+from django_filters import rest_framework as filters
 from rest_framework import permissions
+from rest_framework.generics import (ListCreateAPIView,
+                                     RetrieveUpdateDestroyAPIView)
+
+from .filters import DocumentFilter
+from .models import Documents
+from .pagination import CustomPagination
+from .serializers import DocumentSerializer
 
 
 # Create your views here.
@@ -11,6 +14,8 @@ class DocumentList(ListCreateAPIView):
     serializer_class = DocumentSerializer
     permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPagination
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = DocumentFilter
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
