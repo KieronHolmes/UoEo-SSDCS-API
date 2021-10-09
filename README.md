@@ -167,6 +167,22 @@ response. If not supplied, the API will default to returning **5** items, the ma
 
 ### 4.2. Filtering
 
+The filtering functionality can be used to isolate records that match a specific set of criteria (For example, only
+documents created by John Doe). The filters can be applied by adding the required GET parameter to the end of the
+endpoint URL (For example, `/api/v1/documents/?owner__username=Joe`). Filters can be combined to narrow a search down
+even further, for example `/api/v1/documents/?owner__username=Kieron&title=hadron`.
+
+#### 4.2.1 Documents
+
+GET Paramater | Example | Search Method | Description -- | -- | -- | --
+`title` | `/api/v1/documents/?title=hadron` | `icontains` | The title filter will return any values which contain a
+partial match to the title stored in the database. For example, the supplied example endpoint will return records that
+contain the word hadron, such as "large hadron collider", "hadron research".
+`document_content` | `/api/v1/documents/?document_content=lorem` | `iccontains` | The document content filter will
+return any values which contain a partial match to the document content stored within the database.
+`owner__username` | `/api/v1/documents/?owner__username=Joe` | `icontains` | The owner username filter will return any
+records which contain a full match to the owner username stored within the database.
+
 ## 5. Testing
 
 A comprehensive test suite has been built in accordance with
