@@ -12,24 +12,24 @@ Hadron Collider (LHC) experiments.
     - [2.1. Authentication]()
     - [2.2. Documents]()
 * [3. Usage]()
-    - [3.1. Registering a new user]()
-    - [3.2. Requesting Access/Refresh Tokens]()
-    - [3.3. Refreshing Access Tokens]()
-    - [3.4. Fetching Documents (List)]()
-    - [3.5. Fetching Documents (Specific)]()
-    - [3.6. Creating Documents]()
-    - [3.7. Updating Documents]()
-    - [3.8. Deleting Documents]()
-* [4. Testing]()
-* [5. Contributors]()
-* [6. External Packages and Modules Used]()
+  - [3.1. Registering a new user]()
+  - [3.2. Requesting Access/Refresh Tokens]()
+  - [3.3. Refreshing Access Tokens]()
+  - [3.4. Fetching Documents (List)]()
+  - [3.5. Fetching Documents (Specific)]()
+  - [3.6. Creating Documents]()
+  - [3.7. Updating Documents]()
+  - [3.8. Deleting Documents]()
+* [4. Additional Endpoint Parameters]()
+* [5. Testing]()
+* [6. Contributors]()
+* [7. External Packages and Modules Used]()
 
 ## 1. Installation
 
 Once you have downloaded/cloned this repository, please set this folder as your current working directory and follow the
-below instructions (Windows
-
-- [Alternative Operating Systems](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)):
+below instructions (
+Windows, [Alternative Operating Systems](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)):
 
 **Create a new Virtual Environment:**
 
@@ -57,8 +57,8 @@ python manage.py runserver
 
 ## 2. Endpoints
 
-All API endpoints for the CERN API application are available at the ``/api/v1/{endpoint}`` path of the domain Django is
-listening on (In the case of localhost, this will likely be ``http://127.0.0.1:8000/api/v1/``). With ``{endpoint}``
+All API endpoints for the CERN API application are available at the `/api/v1/{endpoint}` path of the domain Django is
+listening on (In the case of localhost, this will likely be `http://127.0.0.1:8000/api/v1/`). With `{endpoint}`
 representing one of the endpoints listed in the below tables.
 
 ### 2.1 Authentication
@@ -78,9 +78,14 @@ Endpoint | HTTP Method | CRUD Method | Action | Authorization Method
 `documents/<str:id>` | DELETE | DELETE | Deletes the research document with the provided ID. | BEARER token.
 
 ## 3. Usage
-Detailed instructions on how to execute specific actions within this CERN API have been included below. **Please Note:** All instructions are based on using the HTTPie client on a development (localhost) copy of the application.
 
-**``{access_token}``** is the access token provided by the ``/authentication/token/`` or ``/authentication/token/refresh/`` endpoint. By default, access tokens have a **5** minute lifetime before they will need to be refreshed using the ``/authentication/token/refresh/`` endpoint using the ``{refresh_token}`` value (**1 day lifetime**).
+Detailed instructions on how to execute specific actions within this CERN API have been included below. **Please Note:**
+All instructions are based on using the HTTPie client on a development (localhost) copy of the application.
+
+**`{access_token}`** is the access token provided by the ``/authentication/token/``
+or ``/authentication/token/refresh/`` endpoint. By default, access tokens have a **5** minute lifetime before they will
+need to be refreshed using the ``/authentication/token/refresh/`` endpoint using the ``{refresh_token}`` value (**1 day
+lifetime**).
 ### 3.1 Registering a new user
 **NOT YET IMPLEMENTED** - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 ```bash
@@ -91,14 +96,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. I
 ```bash
 http http://127.0.0.1:8000/api/v1/authentication/token/ username="{username}" password="{password}"
 ```
-**``{username}``** is the username associated with the account you wish to use.
-**``{password}``** is the password associated with the account you wish to use.
+
+**`{username}`** is the username associated with the account you wish to use.
+**`{password}`** is the password associated with the account you wish to use.
 ### 3.3 Refreshing Access Tokens
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 ```bash
 http http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{refresh_token}"
 ```
-**``{refresh_token}``** is provided by the ``/api/v1/authentication/token/`` endpoint and is used to regenerate a new access token. The refresh token value is valid for 1 day from the point of generation.
+
+**`{refresh_token}`** is provided by the ``/api/v1/authentication/token/`` endpoint and is used to regenerate a new
+access token. The refresh token value is valid for 1 day from the point of generation.
 ### 3.4 Fetching Documents (List)
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 ```bash
@@ -109,7 +117,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. I
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
-**``{document_id}``** is the version 4 UUID value associated with a particular document which has been created within the API.
+
+**`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the
+API.
 ### 3.6 Creating Documents
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 ```bash
@@ -120,28 +130,60 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. I
 ```bash
 http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
-**``{PATCH/PUT}``** refers to the appropriate HTTP verb based on the data you wish to amend. ``PATCH`` should be used for a partial update, whereas ``PUT`` should be used for a full update.
-**``{document_id}``** is the version 4 UUID value associated with a particular document which has been created within the API.
+
+**`{PATCH/PUT}`** refers to the appropriate HTTP verb based on the data you wish to amend. ``PATCH`` should be used for
+a partial update, whereas ``PUT`` should be used for a full update.
+**`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the
+API.
 
 ### 3.8 Deleting Documents
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum
+primis in faucibus.
+
 ```bash
 http DELETE http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
-**``{document_id}``** is the version 4 UUID value associated with a particular document which has been created within the API.
-## 4. Testing
-A comprehensive test suite has been built in accordance with the [Django Rest Framework Documentation](https://www.django-rest-framework.org/api-guide/testing/). In order to execute the supplied test suite, please execute the following command:
+
+**`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the
+API.
+
+## 4. Additional Endpoint Parameters
+
+This solution contains **pagination** and **filter** functionalities, which can be used on all endpoints used to fetch
+large volumes of data (For example `/api/v1/documents/`).
+
+### 4.1. Pagination
+
+The **pagination** parameter can be used to return a smaller dataset for endpoints which return large volumes of data.
+This can assist consuming applications by reducing the overall load/processing time of an API request.
+
+GET Parameter | Example | Description -- | -- | -- |
+`page` | `/api/v1/documents/?page=2` | The page number of the data you wish to fetch from the API. This value should be
+numeric. If this parameter is not supplied, the default will be **1**.
+`page_size` | `/api/v1/documents/?page_size=10` | The maximum number of items you wish the API to return in its
+response. If not supplied, the API will default to returning **5** items, the maximum number which can be returned is **
+25**.
+
+### 4.2. Filtering
+
+## 5. Testing
+
+A comprehensive test suite has been built in accordance with
+the [Django Rest Framework Documentation](https://www.django-rest-framework.org/api-guide/testing/). In order to execute
+the supplied test suite, please execute the following command:
 
 ```zsh
 python manage.py test
 ```
 
-## 5. Contributors
+## 6. Contributors
+
 * [Kieron Holmes](https://github.com/KieronHolmes) - MSc Computer Science, University of Essex Online
 * [Sergio Zavarce](https://github.com/SerZav) - MSc Computer Science, University of Essex Online
 * [Kikelomo Obayemi](https://github.com/kikeobayemi) - MSc Computer Science, University of Essex Online
 
-## 6. External Packages and Modules Used
+## 7. External Packages and Modules Used
 * [Django](https://github.com/django/django) - Web Framework providing ORM functionality.
 * [Django REST Framework](https://github.com/encode/django-rest-framework) - REST Framework built upon the Django web framework.
 * [Django Filter](https://github.com/carltongibson/django-filter/) - Module providing the ability to filter models when executing a query.
