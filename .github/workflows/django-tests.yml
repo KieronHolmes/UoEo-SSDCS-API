@@ -1,4 +1,4 @@
-name: "Django Testing"
+name: "Django Tests"
 
 on:
   push:
@@ -13,6 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 4
+      fail-fast: false
       matrix:
         os:
           - 'ubuntu-latest'
