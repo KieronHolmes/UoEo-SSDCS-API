@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'documents',
     'rest_framework_simplejwt',
     'django_filters',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -100,8 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Rest Framework Pagination
-# https://www.django-rest-framework.org/tutorial/quickstart/#pagination
+# Rest Framework Settings
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -117,6 +118,19 @@ REST_FRAMEWORK = {
         'anon': '50/hour',
         'user': '100/hour',
     }
+}
+
+# Simple JWT Settings
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': True,
+    'ALGORITHM': 'HS512',
+    'ISSUER': 'CernAPI',
+    'LEEWAY': timedelta(minutes=5),
 }
 
 # Model for User Authentication
