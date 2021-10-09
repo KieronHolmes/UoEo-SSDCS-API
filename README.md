@@ -82,17 +82,29 @@ Endpoint | HTTP Method | CRUD Method | Action | Authorization Method
 Detailed instructions on how to execute specific actions within this CERN API have been included below. **Please Note:**
 All instructions are based on using the HTTPie client on a development (localhost) copy of the application.
 
-**`{access_token}`** is the access token provided by the ``/authentication/token/``
-or ``/authentication/token/refresh/`` endpoint. By default, access tokens have a **5** minute lifetime before they will
-need to be refreshed using the ``/authentication/token/refresh/`` endpoint using the ``{refresh_token}`` value (**1 day
+**`{access_token}`** is the access token provided by the `/authentication/token/`
+or `/authentication/token/refresh/` endpoint. By default, access tokens have a **1** hour lifetime before they will need
+to be refreshed using the `/authentication/token/refresh/` endpoint using the `{refresh_token}` value (**1 day
 lifetime**).
+
+**Please Note:** [Refresh Token Rotation](https://auth0.com/docs/security/tokens/refresh-tokens/refresh-token-rotation)
+has been implemented in this application, therefore requesting a new access token using
+the `/authentication/token/refresh/` endpoint will result in a new `{access_token}` value.
+
 ### 3.1 Registering a new user
-**NOT YET IMPLEMENTED** - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
+**NOT YET IMPLEMENTED** - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et
+malesuada fames ac ante ipsum primis in faucibus.
+
 ```bash
 http http://127.0.0.1:8000/api/v1/authentication/register/
 ```
+
 ### 3.2 Requesting Access/Refresh Tokens
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum
+primis in faucibus.
+
 ```bash
 http http://127.0.0.1:8000/api/v1/authentication/token/ username="{username}" password="{password}"
 ```
