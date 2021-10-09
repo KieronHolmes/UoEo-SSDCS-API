@@ -1,9 +1,6 @@
-# CERN API - University of Essex Online (Secure Software Development - Computer Science) ![CodeQL Analysis Badge](https://github.com/KieronHolmes/UoEo-SSDCS-API/workflows/CodeQL/badge.svg)
+# CERN API - University of Essex Online (Secure Software Development - Computer Science) ![CodeQL Analysis Badge](https://github.com/KieronHolmes/UoEo-SSDCS-API/workflows/CodeQL/badge.svg) ![Django Test Status](https://github.com/KieronHolmes/UoEo-SSDCS-API/workflows/Django%20Tests/badge.svg) 
 
-This GitHub repository contains code used in partial fufillment of the Secure Software Development (Computer Science)
-module of the MSc Computer Science course delivered by the University of Essex Online. The code developed is intended to
-fufil the weaknesses identified in the CERN case study supplied, regarding research materials collected as part of Large
-Hadron Collider (LHC) experiments.
+This GitHub repository contains code used in partial fulfillment of the Secure Software Development (Computer Science) module of the MSc Computer Science course delivered by the University of Essex Online. The code developed is intended to fulfil the weaknesses identified in the CERN case study supplied, regarding research materials collected as part of Large Hadron Collider (LHC) experiments.
 
 ## Table of Contents
 
