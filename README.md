@@ -63,7 +63,8 @@ representing one of the endpoints listed in the below tables.
 
 ### 2.1 Authentication
 
-Endpoint | HTTP Method | Action -- | -- | --
+Endpoint | HTTP Method | Action 
+-- | -- | --
 `authentication/register` | POST | Registers a new user with the provided login credentials.
 `authentication/token` | GET | Fetches an access and refresh token for the user with the provided login credentials.
 `authentication/token/refresh` | GET | Fetches a new access token for the user associated with the supplied refresh token.
@@ -170,7 +171,8 @@ large volumes of data (For example `/api/v1/documents/`).
 The **pagination** parameter can be used to return a smaller dataset for endpoints which return large volumes of data.
 This can assist consuming applications by reducing the overall load/processing time of an API request.
 
-GET Parameter | Example | Description -- | -- | -- |
+GET Parameter | Example | Description 
+-- | -- | -- |
 `page` | `/api/v1/documents/?page=2` | The page number of the data you wish to fetch from the API. This value should be
 numeric. If this parameter is not supplied, the default will be **1**.
 `page_size` | `/api/v1/documents/?page_size=10` | The maximum number of items you wish the API to return in its
@@ -186,7 +188,8 @@ even further, for example `/api/v1/documents/?owner__username=Kieron&title=hadro
 
 #### 4.2.1 Documents
 
-GET Paramater | Example | Search Method | Description -- | -- | -- | --
+GET Paramater | Example | Search Method | Description 
+-- | -- | -- | --
 `title` | `/api/v1/documents/?title=hadron` | `icontains` | The title filter will return any values which contain a
 partial match to the title stored in the database. For example, the supplied example endpoint will return records that
 contain the word hadron, such as "large hadron collider", "hadron research".
