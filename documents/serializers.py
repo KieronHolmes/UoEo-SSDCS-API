@@ -10,4 +10,4 @@ class DocumentSerializer(ModelSerializer):
     class Meta:
         model = Documents
 
-        fields = ['title', 'document_content', 'created_at', 'updated_at', 'owner']
+        fields = ['id', 'title', 'document_content', 'created_at', 'updated_at', 'owner']
