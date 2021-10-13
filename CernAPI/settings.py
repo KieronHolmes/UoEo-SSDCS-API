@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Rest Framework Settings
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -135,6 +137,11 @@ REST_FRAMEWORK = {
     }
 }
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Cern API',
+    'DESCRIPTION': 'Secure Software Development',
+    'VERSION': '1.0.0',
+}
 # Simple JWT Settings
 
 SIMPLE_JWT = {
