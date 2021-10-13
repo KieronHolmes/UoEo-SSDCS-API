@@ -8,19 +8,23 @@ This GitHub repository contains code used in partial fulfillment of the Secure S
 * [2. Endpoints]()
     - [2.1. Authentication]()
     - [2.2. Documents]()
-* [3. Usage]()
-  - [3.1. Registering a new user]()
-  - [3.2. Requesting Access/Refresh Tokens]()
-  - [3.3. Refreshing Access Tokens]()
-  - [3.4. Fetching Documents (List)]()
-  - [3.5. Fetching Documents (Specific)]()
-  - [3.6. Creating Documents]()
-  - [3.7. Updating Documents]()
-  - [3.8. Deleting Documents]()
-* [4. Additional Endpoint Parameters]()
-* [5. Testing]()
-* [6. Contributors]()
-* [7. External Packages and Modules Used]()
+* [3. File Structure]()
+* [4. Usage]()
+  - [4.1. Registering a new user]()
+  - [4.2. Requesting Access/Refresh Tokens]()
+  - [4.3. Refreshing Access Tokens]()
+  - [4.4. Fetching Documents (List)]()
+  - [4.5. Fetching Documents (Specific)]()
+  - [4.6. Creating Documents]()
+  - [4.7. Updating Documents]()
+  - [4.8. Deleting Documents]()
+* [5. Additional Endpoint Parameters]()
+* [6. Other Features]()
+  - [6.1. Cross Origin Request Sharing (CORS)]()
+  - [6.2. Request Throttling]()
+* [7. Testing]()
+* [8. Contributors]()
+* [9. External Packages and Modules Used]()
 
 ## 1. Installation
 
@@ -54,7 +58,7 @@ python manage.py runserver
 
 All API endpoints for the CERN API application are available at the `/api/v1/{endpoint}` path of the domain Django is listening on (In the case of localhost, this will likely be `http://127.0.0.1:8000/api/v1/`). With `{endpoint}` representing one of the endpoints listed in the below tables.
 
-### 2.1 Authentication
+### 2.1. Authentication
 
 Endpoint | HTTP Method | Action 
 -- | -- | --
@@ -62,7 +66,7 @@ Endpoint | HTTP Method | Action
 `authentication/token` | GET | Fetches an access and refresh token for the user with the provided login credentials.
 `authentication/token/refresh` | GET | Fetches a new access token for the user associated with the supplied refresh token.
 
-### 2.2 Documents
+### 2.2. Documents
 Endpoint | HTTP Method | CRUD Method | Action | Authorization Method
 -- | -- | -- | -- | --
 `documents` | GET | READ | Returns all research documents the current user has access to. | BEARER token.
@@ -71,7 +75,52 @@ Endpoint | HTTP Method | CRUD Method | Action | Authorization Method
 `documents/<str:id>` | PUT | UPDATE | Updates a research document with the provided ID. | BEARER token.
 `documents/<str:id>` | DELETE | DELETE | Deletes the research document with the provided ID. | BEARER token.
 
-## 3. Usage
+## 3. File Structure
+
+```
+├── CernAPI
+│ ├── __init__.py
+│ ├── asgi.py
+│ ├── settings.py
+│ ├── urls.py
+│ └── wsgi.py
+├── LICENSE
+├── README.md
+├── authentication
+│ ├── __init__.py
+│ ├── admin.py
+│ ├── apps.py
+│ ├── migrations
+│ │ ├── 0001_initial.py
+│ │ └── __init__.py
+│ ├── models.py
+│ ├── tests.py
+│ ├── urls.py
+│ └── views.py
+├── db.sqlite3
+├── documents
+│ ├── __init__.py
+│ ├── admin.py
+│ ├── apps.py
+│ ├── filters.py
+│ ├── migrations
+│ │ ├── 0001_initial.py
+│ │ └── __init__.py
+│ ├── models.py
+│ ├── pagination.py
+│ ├── serializers.py
+│ ├── tests.py
+│ ├── urls.py
+│ └── views.py
+├── manage.py
+├── requirements.txt
+└── tree.txt
+```
+
+When updating code, the above file tree can be refreshed by running the following command in a unix-based terminal.
+`tree -I 'venv|__pycache__'`
+
+## 4. Usage
 
 Detailed instructions on how to execute specific actions within this CERN API have been included below. **Please Note:** All instructions are based on using the HTTPie client on a development (localhost) copy of the application.
 
@@ -79,7 +128,7 @@ Detailed instructions on how to execute specific actions within this CERN API ha
 
 **Please Note:** [Refresh Token Rotation](https://auth0.com/docs/security/tokens/refresh-tokens/refresh-token-rotation) has been implemented in this application, therefore requesting a new access token using  the `/authentication/token/refresh/` endpoint will result in a new `{access_token}` value.
 
-### 3.1 Registering a new user
+### 4.1. Registering a new user
 
 **NOT YET IMPLEMENTED** - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
@@ -87,7 +136,7 @@ Detailed instructions on how to execute specific actions within this CERN API ha
 http http://127.0.0.1:8000/api/v1/authentication/register/
 ```
 
-### 3.2 Requesting Access/Refresh Tokens
+### 4.2. Requesting Access/Refresh Tokens
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
@@ -97,32 +146,46 @@ http http://127.0.0.1:8000/api/v1/authentication/token/ username="{username}" pa
 
 **`{username}`** is the username associated with the account you wish to use.
 **`{password}`** is the password associated with the account you wish to use.
-### 3.3 Refreshing Access Tokens
+
+### 4.3. Refreshing Access Tokens
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 ```bash
 http http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{refresh_token}"
 ```
 
 **`{refresh_token}`** is provided by the ``/api/v1/authentication/token/`` endpoint and is used to regenerate a new access token. The refresh token value is valid for 1 day from the point of generation.
-### 3.4 Fetching Documents (List)
+
+### 4.4. Fetching Documents (List)
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_token}"
 ```
-### 3.5 Fetching Documents (Specific)
+
+### 4.5. Fetching Documents (Specific)
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
 
 **`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the API.
-### 3.6 Creating Documents
+
+### 4.6. Creating Documents
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
 ```bash
 http POST http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_token}"
 ```
-### 3.7 Updating Documents
+
+### 4.7. Updating Documents
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
 ```bash
 http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
@@ -130,7 +193,7 @@ http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authoriza
 **`{PATCH/PUT}`** refers to the appropriate HTTP verb based on the data you wish to amend. ``PATCH`` should be used for a partial update, whereas ``PUT`` should be used for a full update.
 **`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the API.
 
-### 3.8 Deleting Documents
+### 4.8. Deleting Documents
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
@@ -140,11 +203,11 @@ http DELETE http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization:
 
 **`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the API.
 
-## 4. Additional Endpoint Parameters
+## 5. Additional Endpoint Parameters
 
 This solution contains **pagination** and **filter** functionalities, which can be used on all endpoints used to fetch large volumes of data (For example `/api/v1/documents/`).
 
-### 4.1. Pagination
+### 5.1. Pagination
 
 The **pagination** parameter can be used to return a smaller dataset for endpoints which return large volumes of data. This can assist consuming applications by reducing the overall load/processing time of an API request.
 
@@ -153,11 +216,11 @@ GET Parameter | Example | Description
 `page` | `/api/v1/documents/?page=2` | The page number of the data you wish to fetch from the API. This value should be numeric. If this parameter is not supplied, the default will be **1**.
 `page_size` | `/api/v1/documents/?page_size=10` | The maximum number of items you wish the API to return in its response. If not supplied, the API will default to returning **5** items, the maximum number which can be returned is **25**.
 
-### 4.2. Filtering
+### 5.2. Filtering
 
 The filtering functionality can be used to isolate records that match a specific set of criteria (For example, only documents created by John Doe). The filters can be applied by adding the required GET parameter to the end of the  endpoint URL (For example, `/api/v1/documents/?owner__username=Joe`). Filters can be combined to narrow a search down  even further, for example `/api/v1/documents/?owner__username=Kieron&title=hadron`.
 
-#### 4.2.1 Documents
+#### 5.2.1 Documents
 
 GET Parameter | Example | Search Method | Description
 -- | -- | -- | --
@@ -165,7 +228,26 @@ GET Parameter | Example | Search Method | Description
 `document_content` | `/api/v1/documents/?document_content=lorem` | `iccontains` | The document content filter will return any values which contain a partial match to the document content stored within the database.
 `owner__username` | `/api/v1/documents/?owner__username=Joe` | `icontains` | The owner username filter will return any records which contain a full match to the owner username stored within the database.
 
-## 5. Testing
+## 6. Other Features
+This application includes a variety of additional security functions/features, all of which are listed within this section.
+
+### 6.1. Cross Origin Request Sharing (CORS)
+CORS headers are automatically added to responses from this application through Django middleware. By default, only two origins are allowed:
+
+```
+'http://127.0.0.1:8000',
+'http://localhost:8000',
+```
+
+In order to add additional origins, you should add the root URL to the `CORS_ALLOWED_ORIGINS` directive within the `settings.py` file.
+
+### 6.2. Request Throttling
+
+In order to prevent brute force attacks, this application enforces request throttling to ensure long-term availability and prevent abuse of resources. By default, Authenticated users are restricted to **100 requests per hour**, whereas non-authenticated users are restricted to **50 requests per hour**.
+
+This value can be changed by editing the `DEFAULT_THROTTLE_RATES` attribute of the `REST_FRAMEWORK` directive within the `settings.py` file.
+
+## 7. Testing
 
 A comprehensive test suite has been built in accordance with the [Django Rest Framework Documentation](https://www.django-rest-framework.org/api-guide/testing/). In order to execute the supplied test suite, please execute the following command:
 
@@ -173,13 +255,22 @@ A comprehensive test suite has been built in accordance with the [Django Rest Fr
 python manage.py test
 ```
 
-## 6. Contributors
+**Please Note:** This repository uses GitHub workflows to manage automated testing on various operating systems and Python versions. All Pull Requests will only be approved if the Django tests are passing on all environments.
+
+Python Version | Operating System
+-- | --
+Python 3.7 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
+Python 3.8 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
+Python 3.9 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
+Python 3.10 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
+
+## 8. Contributors
 
 * [Kieron Holmes](https://github.com/KieronHolmes) - MSc Computer Science, University of Essex Online
 * [Sergio Zavarce](https://github.com/SerZav) - MSc Computer Science, University of Essex Online
 * [Kikelomo Obayemi](https://github.com/kikeobayemi) - MSc Computer Science, University of Essex Online
 
-## 7. External Packages and Modules Used
+## 9. External Packages and Modules Used
 * [Django](https://github.com/django/django) - Web Framework providing ORM functionality.
 * [Django REST Framework](https://github.com/encode/django-rest-framework) - REST Framework built upon the Django web framework.
 * [Django Filter](https://github.com/carltongibson/django-filter/) - Module providing the ability to filter models when executing a query.
