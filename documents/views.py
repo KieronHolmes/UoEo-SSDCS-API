@@ -11,6 +11,9 @@ from .serializers import DocumentSerializer
 
 # Create your views here.
 class DocumentList(ListCreateAPIView):
+    """
+    Fetch one or more documents from the server.
+    """
     serializer_class = DocumentSerializer
     permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPagination
@@ -25,6 +28,9 @@ class DocumentList(ListCreateAPIView):
 
 
 class DocumentDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Create, Update or Delete a single document from the server.
+    """
     serializer_class = DocumentSerializer
     permission_classes = (permissions.IsAuthenticated,)
     lookup_field = "id"

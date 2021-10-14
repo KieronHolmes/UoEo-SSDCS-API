@@ -141,7 +141,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Cern API",
-    "DESCRIPTION": "Secure Software Development",
+    "DESCRIPTION": "Secure Software Development (Computer Science)",
     "VERSION": "1.0.0",
 }
 # Simple JWT Settings
