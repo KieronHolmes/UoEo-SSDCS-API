@@ -1,7 +1,8 @@
-from rest_framework.generics import (CreateAPIView)
-from .serializers import RegisterSerializer
-from .models import CustomUser
 from rest_framework import permissions
+from rest_framework.generics import CreateAPIView
+
+from .models import CustomUser
+from .serializers import RegisterSerializer
 
 
 class RegisterView(CreateAPIView):
