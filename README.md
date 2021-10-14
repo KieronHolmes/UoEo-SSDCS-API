@@ -24,6 +24,7 @@ This GitHub repository contains code used in partial fulfillment of the Secure S
 * [6. Other Features]()
   - [6.1. Cross Origin Request Sharing (CORS)]()
   - [6.2. Request Throttling]()
+  - [6.3. Password Validation]()
 * [7. Testing]()
 * [8. Contributors]()
 * [9. External Packages and Modules Used]()
@@ -248,6 +249,10 @@ In order to add additional origins, you should add the root URL to the `CORS_ALL
 In order to prevent brute force attacks, this application enforces request throttling to ensure long-term availability and prevent abuse of resources. By default, Authenticated users are restricted to **100 requests per hour**, whereas non-authenticated users are restricted to **50 requests per hour**.
 
 This value can be changed by editing the `DEFAULT_THROTTLE_RATES` attribute of the `REST_FRAMEWORK` directive within the `settings.py` file.
+
+### 6.3. Password Validation
+
+In order to prevent users from supplying commonly used passwords, upon registering for an account, the supplied password is checked against a list of [10k of the most commonly used passwords](https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10k-most-common.txt). In the event the users password is contained on this list, the register function will throw a ValidationError and display the appropriate output to the user.
 
 ## 7. Testing
 
