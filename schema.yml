@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Cern API
   version: 1.0.0
-  description: Secure Software Development
+  description: Secure Software Development (Computer Science)
 paths:
   /api/schema/:
     get:
@@ -233,6 +233,14 @@ paths:
       operationId: api_v1_documents_list
       description: Fetch one or more documents from the server.
       parameters:
+      - in: query
+        name: document_content
+        schema:
+          type: string
+      - in: query
+        name: owner__username
+        schema:
+          type: string
       - name: page
         required: false
         in: query
@@ -245,6 +253,10 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: title
+        schema:
+          type: string
       tags:
       - api
       security:
@@ -382,6 +394,24 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/gdpr/access-request/:
+    get:
+      operationId: api_v1_gdpr_access_request_list
+      description: A function to retrieve all data held about the currently logged
+        in user.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GDPR'
+          description: ''
 components:
   schemas:
     Document:
@@ -416,6 +446,33 @@ components:
       - owner
       - title
       - updated_at
+    GDPR:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+          readOnly: true
+      required:
+      - documents
+      - id
+      - username
     PaginatedDocumentList:
       type: object
       properties:

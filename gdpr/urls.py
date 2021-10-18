@@ -1,5 +1,6 @@
 from django.urls import path
+from .views import SubjectAccessRequestView
 
 urlpatterns = [
-    # This should contain methods to both create and delete user data
+    path("access-request/", SubjectAccessRequestView.as_view({'get': 'list'}), name="subject_access_request"),
 ]
