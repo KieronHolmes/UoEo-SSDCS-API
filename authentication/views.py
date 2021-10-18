@@ -1,6 +1,6 @@
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
-from drf_spectacular.utils import extend_schema_view, extend_schema
 
 from .models import CustomUser
 from .serializers import RegisterSerializer
