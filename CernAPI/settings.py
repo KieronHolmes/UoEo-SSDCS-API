@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "authentication",
     "documents",
+    "gdpr",
     "rest_framework_simplejwt",
     "django_filters",
     "rest_framework_simplejwt.token_blacklist",
