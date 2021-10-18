@@ -1,8 +1,7 @@
 from django_filters import rest_framework as filters
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import permissions
-from rest_framework.generics import (ListCreateAPIView,
-                                     RetrieveUpdateDestroyAPIView)
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from .filters import DocumentFilter
 from .models import Documents
@@ -14,13 +13,13 @@ from .serializers import DocumentSerializer
     get=extend_schema(
         summary="Gets a list of all documents.",
         description="Gets a list of all documents within the CERN API that the currently logged in user has access to.",
-        tags=["Documents"]
+        tags=["Documents"],
     ),
     post=extend_schema(
         summary="Creates a new document.",
         description="Creates a new document with the provided details.",
-        tags=["Documents"]
-    )
+        tags=["Documents"],
+    ),
 )
 class DocumentList(ListCreateAPIView):
     """
@@ -29,6 +28,7 @@ class DocumentList(ListCreateAPIView):
     post:
         x
     """
+
     serializer_class = DocumentSerializer
     permission_classes = (permissions.IsAuthenticated,)
     pagination_class = CustomPagination
@@ -46,22 +46,22 @@ class DocumentList(ListCreateAPIView):
     get=extend_schema(
         summary="Fetches a specific document.",
         description="Fetches a specific document (Providing the current user has access to the resource).",
-        tags=["Documents"]
+        tags=["Documents"],
     ),
     put=extend_schema(
         summary="Performs a full update to a specific document.",
         description="Performs a complete update of a specific document (Providing the current user has access to the resource).",
-        tags=["Documents"]
+        tags=["Documents"],
     ),
     patch=extend_schema(
         summary="Performs a partial update to a specific document.",
         description="Performs a partial update to a specific document (Providing the current user has access to the resource).",
-        tags=["Documents"]
+        tags=["Documents"],
     ),
     delete=extend_schema(
         summary="Deletes a specific document.",
         description="Performs a delete on a specific document (Providing the current user has access to the resource).",
-        tags=["Documents"]
+        tags=["Documents"],
     ),
 )
 class DocumentDetailView(RetrieveUpdateDestroyAPIView):
@@ -78,6 +78,7 @@ class DocumentDetailView(RetrieveUpdateDestroyAPIView):
     delete:
         x
     """
+
     serializer_class = DocumentSerializer
     permission_classes = (permissions.IsAuthenticated,)
     lookup_field = "id"
