@@ -13,7 +13,7 @@ class RegisterSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ("username", "password", "email")
-        extra_kwargs = {"email": {"required": True}}
+        extra_kwargs = {"email": {"required": True}, "password": {"write_only": True}}
 
     def validate_password(self, value):
         # Password List Source: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10k-most-common.txt
