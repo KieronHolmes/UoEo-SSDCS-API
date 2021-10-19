@@ -1,10 +1,11 @@
-from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import permissions
 from drf_spectacular.utils import extend_schema, extend_schema_view
+from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from authentication.models import CustomUser
+
 from .serializers import GDPRSerializer
 
 
