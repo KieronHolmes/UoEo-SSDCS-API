@@ -3,6 +3,7 @@ from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
 
 from authentication.models import CustomUser
+
 from .serializers import RegisterSerializer
 
 
