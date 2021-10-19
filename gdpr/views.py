@@ -29,6 +29,10 @@ class SubjectAccessRequestView(ReadOnlyModelViewSet):
 
 
 class SubjectErasureRequestView(APIView):
+    """
+    delete:
+        x
+    """
     permission_classes = (permissions.IsAuthenticated,)
 
     @extend_schema(
