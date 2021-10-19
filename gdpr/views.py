@@ -14,6 +14,7 @@ class SubjectAccessRequestView(ReadOnlyModelViewSet):
     list:
         x
     """
+
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = GDPRSerializer
     pagination_class = None
@@ -21,7 +22,7 @@ class SubjectAccessRequestView(ReadOnlyModelViewSet):
     @extend_schema(
         summary="Performs a Subject Access Request.",
         description="Performs a Subject Access Request with the currently logged in users details.",
-        tags=["GDPR"]
+        tags=["GDPR"],
     )
     def list(self, request, *args, **kwargs):
         user = request.user
@@ -34,12 +35,13 @@ class SubjectErasureRequestView(APIView):
     delete:
         x
     """
+
     permission_classes = (permissions.IsAuthenticated,)
 
     @extend_schema(
         summary="Performs a Subject Erasure Request",
         description="Deletes all the information held on the currently logged in user (Including User Account).",
-        tags=["GDPR"]
+        tags=["GDPR"],
     )
     def delete(self, request, *args, **kwaargs):
         user = request.user
