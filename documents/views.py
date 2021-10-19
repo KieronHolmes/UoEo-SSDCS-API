@@ -34,6 +34,7 @@ class DocumentList(ListCreateAPIView):
     pagination_class = CustomPagination
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = DocumentFilter
+    queryset = Documents.objects.none()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
