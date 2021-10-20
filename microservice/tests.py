@@ -10,7 +10,9 @@ class MicroServiceTest(APITestCase):
         """
         Sets up the required attributes for this test class (User accounts).
         """
-        self.user = CustomUser.objects.create_user("TestUser", "testuser@example.com", "StR0nGPaSSw5rd!")
+        self.user = CustomUser.objects.create_user(
+            "TestUser", "testuser@example.com", "StR0nGPaSSw5rd!"
+        )
 
     def test_microservice_returns_data(self):
         """
