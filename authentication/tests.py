@@ -31,7 +31,7 @@ class RegisterTests(APITestCase):
             "username": "invalid-user",
             "email": "ThisIsNotAnEmailAddress",
             "password": "StR0nGP45SWorD",
-            "role": "admin"
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
