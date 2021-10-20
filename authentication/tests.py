@@ -15,6 +15,7 @@ class RegisterTests(APITestCase):
             "username": "valid-user",
             "password": "r4nD0mPaSsW0rrd#0192",
             "email": "valid.user@example.com",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -30,6 +31,7 @@ class RegisterTests(APITestCase):
             "username": "invalid-user",
             "email": "ThisIsNotAnEmailAddress",
             "password": "StR0nGP45SWorD",
+            "role": "admin"
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -44,6 +46,7 @@ class RegisterTests(APITestCase):
             "username": "common-password",
             "email": "common.password@example.com",
             "password": "qwerty",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -61,6 +64,7 @@ class RegisterTests(APITestCase):
             "username": "existing-username",
             "email": "another.username@example.com",
             "password": "P4SsW0rdSh0uLdW00Rk",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -78,6 +82,7 @@ class RegisterTests(APITestCase):
             "username": "another-username",
             "email": "existing.username@example.com",
             "password": "P4SsW0rdSh0uLdW00Rk",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
