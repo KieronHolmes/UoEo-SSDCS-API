@@ -20,7 +20,6 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
-
 from welcome.views import welcome
 
 urlpatterns = [
@@ -29,6 +28,8 @@ urlpatterns = [
     path("", welcome),
     path("api/v1/authentication/", include("authentication.urls")),
     path("api/v1/documents/", include("documents.urls")),
+    path("api/v1/gdpr/", include("gdpr.urls")),
+    path("api/v1/microservice/", include("microservice.urls")),
     path(
         "api/swagger/",
         SpectacularSwaggerView.as_view(url_name="schema"),

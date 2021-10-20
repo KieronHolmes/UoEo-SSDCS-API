@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Cern API
   version: 1.0.0
-  description: Secure Software Development
+  description: Secure Software Development (Computer Science)
 paths:
   /api/schema/:
     get:
@@ -149,9 +149,10 @@ paths:
   /api/v1/authentication/register/:
     post:
       operationId: api_v1_authentication_register_create
-      description: Provide the functionality for a user to register for a new account.
+      description: Registers for a new user account with the provided details.
+      summary: Register a user account.
       tags:
-      - api
+      - Registration
       requestBody:
         content:
           application/json:
@@ -231,8 +232,18 @@ paths:
   /api/v1/documents/:
     get:
       operationId: api_v1_documents_list
-      description: Fetch one or more documents from the server.
+      description: Gets a list of all documents within the CERN API that the currently
+        logged in user has access to.
+      summary: Gets a list of all documents.
       parameters:
+      - in: query
+        name: document_content
+        schema:
+          type: string
+      - in: query
+        name: owner__username
+        schema:
+          type: string
       - name: page
         required: false
         in: query
@@ -245,8 +256,12 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: title
+        schema:
+          type: string
       tags:
-      - api
+      - Documents
       security:
       - jwtAuth: []
       responses:
@@ -258,9 +273,10 @@ paths:
           description: ''
     post:
       operationId: api_v1_documents_create
-      description: Fetch one or more documents from the server.
+      description: Creates a new document with the provided details.
+      summary: Creates a new document.
       tags:
-      - api
+      - Documents
       requestBody:
         content:
           application/json:
@@ -285,7 +301,9 @@ paths:
   /api/v1/documents/{id}:
     get:
       operationId: api_v1_documents_retrieve
-      description: Create, Update or Delete a single document from the server.
+      description: Fetches a specific document (Providing the current user has access
+        to the resource).
+      summary: Fetches a specific document.
       parameters:
       - in: path
         name: id
@@ -293,7 +311,7 @@ paths:
           type: string
         required: true
       tags:
-      - api
+      - Documents
       security:
       - jwtAuth: []
       responses:
@@ -305,7 +323,9 @@ paths:
           description: ''
     put:
       operationId: api_v1_documents_update
-      description: Create, Update or Delete a single document from the server.
+      description: Performs a complete update of a specific document (Providing the
+        current user has access to the resource).
+      summary: Performs a full update to a specific document.
       parameters:
       - in: path
         name: id
@@ -313,7 +333,7 @@ paths:
           type: string
         required: true
       tags:
-      - api
+      - Documents
       requestBody:
         content:
           application/json:
@@ -337,7 +357,9 @@ paths:
           description: ''
     patch:
       operationId: api_v1_documents_partial_update
-      description: Create, Update or Delete a single document from the server.
+      description: Performs a partial update to a specific document (Providing the
+        current user has access to the resource).
+      summary: Performs a partial update to a specific document.
       parameters:
       - in: path
         name: id
@@ -345,7 +367,7 @@ paths:
           type: string
         required: true
       tags:
-      - api
+      - Documents
       requestBody:
         content:
           application/json:
@@ -368,7 +390,9 @@ paths:
           description: ''
     delete:
       operationId: api_v1_documents_destroy
-      description: Create, Update or Delete a single document from the server.
+      description: Performs a delete on a specific document (Providing the current
+        user has access to the resource).
+      summary: Deletes a specific document.
       parameters:
       - in: path
         name: id
@@ -376,12 +400,30 @@ paths:
           type: string
         required: true
       tags:
-      - api
+      - Documents
       security:
       - jwtAuth: []
       responses:
         '204':
           description: No response body
+  /api/v1/gdpr/access-request/:
+    get:
+      operationId: api_v1_gdpr_access_request_list
+      description: A function to retrieve all data held about the currently logged
+        in user.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GDPR'
+          description: ''
 components:
   schemas:
     Document:
@@ -416,6 +458,33 @@ components:
       - owner
       - title
       - updated_at
+    GDPR:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+          readOnly: true
+      required:
+      - documents
+      - id
+      - username
     PaginatedDocumentList:
       type: object
       properties:
@@ -472,6 +541,7 @@ components:
           maxLength: 150
         password:
           type: string
+          writeOnly: true
           maxLength: 128
         email:
           type: string
