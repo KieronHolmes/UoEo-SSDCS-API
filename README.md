@@ -9,7 +9,10 @@ This GitHub repository contains code used in partial fulfillment of the Secure S
 * [1. Installation]()
 * [2. Endpoints]()
     - [2.1. Authentication]()
-    - [2.2. Documents]()
+    - [2.2. Registration]() 
+    - [2.3. Documents]()
+    - [2.4. GDPR]()
+    - [2.5  Microservices]()
 * [3. File Structure]()
 * [4. Usage]()
   - [4.1. Registering a new user]()
@@ -20,6 +23,8 @@ This GitHub repository contains code used in partial fulfillment of the Secure S
   - [4.6. Creating Documents]()
   - [4.7. Updating Documents]()
   - [4.8. Deleting Documents]()
+  - [4.9  Data access request]()
+  - [4.10 Data erasure request]()
 * [5. Additional Endpoint Parameters]()
 * [6. Other Features]()
   - [6.1. Cross Origin Request Sharing (CORS)]()
@@ -36,13 +41,13 @@ Once you have downloaded/cloned this repository, please set this folder as your 
 **Create a new Virtual Environment:**
 
 ```zsh
-python -m venv venv
+python -m venv env
 ```
 
 **Enter the Virtual Environment:**
 
 ```zsh
-.\venv\Scripts\activate
+.\env\Scripts\activate
 ```
 
 **Install dependencies required by this application:**
@@ -50,7 +55,11 @@ python -m venv venv
 ```zsh
 pip install -r requirements.txt
 ```
+**Apply migrations:**
 
+```zsh
+python manage.py migrate
+```
 **Running the Django Server:**
 
 ```zsh
@@ -63,13 +72,18 @@ All API endpoints for the CERN API application are available at the `/api/v1/{en
 
 ### 2.1. Authentication
 
+Endpoint | HTTP Method | Action | Validity
+-- | -- | -- | --
+`authentication/token` | GET | Fetches an access and refresh token for the user with the provided login credentials. | 1 hour
+`authentication/token/refresh` | GET | Fetches a new access token for the user associated with the supplied refresh token. | 24 hours
+
+### 2.2. Registration
+
 Endpoint | HTTP Method | Action 
 -- | -- | --
 `authentication/register` | POST | Registers a new user with the provided login credentials.
-`authentication/token` | GET | Fetches an access and refresh token for the user with the provided login credentials.
-`authentication/token/refresh` | GET | Fetches a new access token for the user associated with the supplied refresh token.
 
-### 2.2. Documents
+### 2.3. Documents
 Endpoint | HTTP Method | CRUD Method | Action | Authorization Method
 -- | -- | -- | -- | --
 `documents` | GET | READ | Returns all research documents the current user has access to. | BEARER token.
@@ -77,6 +91,19 @@ Endpoint | HTTP Method | CRUD Method | Action | Authorization Method
 `documents` | POST | CREATE | Creates an new research document. | BEARER token.
 `documents/<str:id>` | PUT | UPDATE | Updates a research document with the provided ID. | BEARER token.
 `documents/<str:id>` | DELETE | DELETE | Deletes the research document with the provided ID. | BEARER token.
+
+### 2.4. GDPR
+
+Endpoint | HTTP Method | Action 
+-- | -- | --
+`gdpr/access-request` | GET | Returns all data held on user.
+`gdpr/erasure-request` | DELETE | deletes all user data.
+
+### 2.5. Microservices
+
+Endpoint | HTTP Method | Action 
+-- | -- | --
+ microservices/<str:query>` | GET | Returns a list for a search string.
 
 ## 3. File Structure
 
@@ -133,7 +160,6 @@ Detailed instructions on how to execute specific actions within this CERN API ha
 
 ### 4.1. Registering a new user
 
-**NOT YET IMPLEMENTED** - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
 ```bash
 http http://127.0.0.1:8000/api/v1/authentication/register/
@@ -141,7 +167,7 @@ http http://127.0.0.1:8000/api/v1/authentication/register/
 
 ### 4.2. Requesting Access/Refresh Tokens
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
 
 ```bash
 http http://127.0.0.1:8000/api/v1/authentication/token/ username="{username}" password="{password}"
@@ -152,7 +178,7 @@ http http://127.0.0.1:8000/api/v1/authentication/token/ username="{username}" pa
 
 ### 4.3. Refreshing Access Tokens
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
 ```bash
 http http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{refresh_token}"
 ```
@@ -161,7 +187,6 @@ http http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{refres
 
 ### 4.4. Fetching Documents (List)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_token}"
@@ -169,7 +194,6 @@ http http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_toke
 
 ### 4.5. Fetching Documents (Specific)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
@@ -179,7 +203,7 @@ http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer
 
 ### 4.6. Creating Documents
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
 
 ```bash
 http POST http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_token}"
@@ -187,7 +211,7 @@ http POST http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access
 
 ### 4.7. Updating Documents
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
 
 ```bash
 http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
@@ -198,7 +222,6 @@ http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authoriza
 
 ### 4.8. Deleting Documents
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget sem turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
 ```bash
 http DELETE http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
