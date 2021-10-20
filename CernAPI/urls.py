@@ -19,10 +19,12 @@ from django.urls import path
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularRedocView
 from drf_spectacular.views import SpectacularSwaggerView
+from welcome.views import welcome
 
 urlpatterns = [
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("admin/", admin.site.urls),
+    path("", welcome),
     path("api/v1/authentication/", include("authentication.urls")),
     path("api/v1/documents/", include("documents.urls")),
     path(
