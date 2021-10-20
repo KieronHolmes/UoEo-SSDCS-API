@@ -1,11 +1,13 @@
-from rest_framework.views import APIView
-from rest_framework import permissions
-from drf_spectacular.utils import extend_schema
-from rest_framework.response import Response
 from json.decoder import JSONDecodeError
+
 import requests
-from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
-from rest_framework import status
+from drf_spectacular.utils import extend_schema
+from requests.exceptions import (ConnectionError, HTTPError, RequestException,
+                                 Timeout)
+from rest_framework import permissions, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .serializers import ResultSerializer
 
 
