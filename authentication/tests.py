@@ -13,8 +13,9 @@ class RegisterTests(APITestCase):
         url = reverse("register_user")
         data = {
             "username": "valid-user",
-            "password": "r4nD0mPaSsW0rrd#0192",
+            "password": "r4Mns&ywn2837",
             "email": "valid.user@example.com",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -29,7 +30,8 @@ class RegisterTests(APITestCase):
         data = {
             "username": "invalid-user",
             "email": "ThisIsNotAnEmailAddress",
-            "password": "StR0nGP45SWorD",
+            "password": "r4Mns&ywn2837",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -44,6 +46,7 @@ class RegisterTests(APITestCase):
             "username": "common-password",
             "email": "common.password@example.com",
             "password": "qwerty",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -60,7 +63,8 @@ class RegisterTests(APITestCase):
         data = {
             "username": "existing-username",
             "email": "another.username@example.com",
-            "password": "P4SsW0rdSh0uLdW00Rk",
+            "password": "r4Mns&ywn2837",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -71,13 +75,14 @@ class RegisterTests(APITestCase):
         Attempt to register a user account with an already existing email.
         """
         CustomUser.objects.create_user(
-            "existing-username", "existing.username@example.com", "P4SsW0rdSh0uLdW00Rk"
+            "existing-username", "existing.username@example.com", "r4Mns&ywn2837"
         )
         url = reverse("register_user")
         data = {
             "username": "another-username",
             "email": "existing.username@example.com",
-            "password": "P4SsW0rdSh0uLdW00Rk",
+            "password": "r4Mns&ywn2837",
+            "role": "admin",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
