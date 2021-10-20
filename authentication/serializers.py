@@ -1,9 +1,11 @@
 # imports required libraries
+import re
+
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from rest_framework.validators import UniqueValidator
+
 from .models import CustomUser
-import re
 
 
 class RegisterSerializer(ModelSerializer):
