@@ -20,6 +20,7 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
+
 from welcome.views import welcome
 
 urlpatterns = [
