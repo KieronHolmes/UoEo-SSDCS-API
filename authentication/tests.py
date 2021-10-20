@@ -13,7 +13,7 @@ class RegisterTests(APITestCase):
         url = reverse("register_user")
         data = {
             "username": "valid-user",
-            "password": "r4nD0mPaSsW0rrd#0192",
+            "password": "r4Mns&ywn2837",
             "email": "valid.user@example.com",
             "role": "admin",
         }
@@ -30,7 +30,7 @@ class RegisterTests(APITestCase):
         data = {
             "username": "invalid-user",
             "email": "ThisIsNotAnEmailAddress",
-            "password": "StR0nGP45SWorD",
+            "password": "r4Mns&ywn2837",
             "role": "admin",
         }
         response = self.client.post(url, data, format="json")
@@ -63,7 +63,7 @@ class RegisterTests(APITestCase):
         data = {
             "username": "existing-username",
             "email": "another.username@example.com",
-            "password": "P4SsW0rdSh0uLdW00Rk",
+            "password": "r4Mns&ywn2837",
             "role": "admin",
         }
         response = self.client.post(url, data, format="json")
@@ -75,13 +75,13 @@ class RegisterTests(APITestCase):
         Attempt to register a user account with an already existing email.
         """
         CustomUser.objects.create_user(
-            "existing-username", "existing.username@example.com", "P4SsW0rdSh0uLdW00Rk"
+            "existing-username", "existing.username@example.com", "r4Mns&ywn2837"
         )
         url = reverse("register_user")
         data = {
             "username": "another-username",
             "email": "existing.username@example.com",
-            "password": "P4SsW0rdSh0uLdW00Rk",
+            "password": "r4Mns&ywn2837",
             "role": "admin",
         }
         response = self.client.post(url, data, format="json")
