@@ -161,7 +161,7 @@ To test from the command line interface, run the following command to install HT
 pip install httpie
 ```
 
-To access the user interface, navigate to http://127.0.0.1:8000 or localhost:8000/, then click API documentation to access the Swagger user interface
+To access the user interface, navigate to http://127.0.0.1:8000 or localhost:8000, then click API documentation to access the Swagger user interface
 
 ### 4.1. Registering a new user
 
@@ -172,7 +172,7 @@ Defined roles are "guest", "admin", "researcher", "employee". Each role has defi
 If the role field is not entered, the user role automatically defaults to guest.
 
 
-**Using the command line interface**
+**From the Command Line Interface**
 
 ```bash
 http POST http://127.0.0.1:8000/api/v1/authentication/register/ username="{username}" password="{password}" email="{email}"
@@ -187,10 +187,10 @@ http POST http://127.0.0.1:8000/api/v1/authentication/register/ username="{usern
 **STEPS:**
 First, you have to login with the newly created username and password
 
-**From the Swagger Interface**
+**From the Swagger User Interface**
 Enter details under the api section, then click execute
 
-**From the command line interface**
+**From the Command Line Interface**
 ```bash
 http POST http://127.0.0.1:8000/api/v1/authentication/token/ username="{username}" password="{password}"
 ```
@@ -200,12 +200,13 @@ http POST http://127.0.0.1:8000/api/v1/authentication/token/ username="{username
 After successful login, access and refresh tokens are generated.
 
 ### 4.3. Refreshing Access Tokens
-**From Swagger Interface**
+
+**From the Swagger User Interface**
 Scroll to token refresh under the api section, click "Try it out" on the right corner
 Enter the refresh token generated in the previous section
 Click Execute
 
-**From the command line interface**
+**From the Command Line Interface**
 ```bash
 http POST http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{refresh_token}"
 ```
@@ -215,27 +216,29 @@ http POST http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{r
 ### 4.4. Documents
 Before any CRUD functionalities can be carried out from the document endpoint, the user must be authorised using the access token.
 
-**From Swagger Interface**
+**From the Swagger User Interface**
 Copy access token from the api section
 Click "Authorise" at the top right corner of the page
 Enter access token and click log in. 
 
 ### 4.4.1. Fetching Documents (List)
-**From Swagger Interface**
+
+**From the Swagger User Interface**
 Scroll to Document Section, then click "Try it out" on the right corner
 Click execute to return all documents created by the logged on user
 
-**From Command line**
+**From the Command Line Interface**
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_token}"
 ```
 ### 4.4.2. Fetching Documents (Specific)
-**From Swagger Interface**
+
+**From the Swagger User Interface**
 Scroll to relevant section under document, then click "Try it out" on the right corner
 Enter document id
 Click execute to return the document that matches the id entered.
 
-**From Command line**
+**From the Command Line Interface**
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
@@ -243,26 +246,28 @@ http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer
 **`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the API.
 
 ### 4.4.3. Creating Docuemnets
-**From Swagger Interface**
+
+**From the Swagger User Interface**
 Scroll to relevant section, then click "Try it out" on the right corner
 Enter document title and document content
 Click execute to create new docuemnt
 **Please Note: A unique document id, date and time of creation is automatically generated for every document created**
 
-**From Command line**
+**From the Command Line Interface**
 
 ```bash
 http POST http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_token}"
 ```
 
 ### 4.4.4. Updating Documents
-**From Swagger Interface**
+
+**From the Swagger User Interface**
 Scroll to relevant section, then click "Try it out" on the right corner
 Enter document id
 make changed to the "document title" and "document content" fields as desired
 Click execute to display changes to document.
 
-**From Command line**
+**From the Command Line Interface**
 
 ```bash
 http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
@@ -273,11 +278,11 @@ http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authoriza
 
 ### 4.4.5. Deleting Documents
 
-**From Swagger Interface**
+**From the Swagger User Interface**
 Scroll to relevant section, then click "Try it out" on the right corner
 Enter document id, then click execute
 
-**From Command line**
+**From the Command Line Interface**
 ```bash
 http DELETE http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
@@ -314,29 +319,30 @@ A user can request for all of their personal data held by the CERN API through a
 
 ## 5.1 Making a Data Access Request
 
-**From Swagger Interface**
+**From the Swagger User Interface**
 Scroll to the relevant section under GDPR, then click "Try it out" on the right corner
 Click execute to return all data held on the logged on user.
 
-**From the command line interface**
+**From the Command Line Interface**
 
 
 ## 5.2 Making a Data Erasure Request
-**From Swagger Interface**
+
+**From the Swagger User Interface**
 Scroll to relevant section under GDPR, then click "Try it out" on the right corner
 Click execute to delete all data held on the logged on user
 **Please Note:** user account will be deleted and user will be automatically logged out.
 
-**From the command line interface**
+**From the Command Line Interface**
 
 ## 6. Microservices
 The CERN API has a feature that can query an external CERN document server using a search string
-**From Swagger Interface**
+**From the Swagger User Interface**
 Scroll to Microservice section, then click "Try it out" on the right corner
 Enter search string
 Click execute to return a list of documents on CERN document server matching the search string entered.
 
-**From the command line interface**
+**From the Command Line Interface**
 
 ## 7. Other Features
 This application includes a variety of additional security functions/features, all of which are listed within this section.
