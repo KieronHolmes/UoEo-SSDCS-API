@@ -188,6 +188,7 @@ http POST http://127.0.0.1:8000/api/v1/authentication/register/ username="{usern
 First, you have to login with the newly created username and password
 
 **From the Swagger User Interface**
+
 Enter details under the api section, then click execute
 
 **From the Command Line Interface**
@@ -202,6 +203,7 @@ After successful login, access and refresh tokens are generated.
 ### 4.3. Refreshing Access Tokens
 
 **From the Swagger User Interface**
+
 Scroll to token refresh under the api section, click "Try it out" on the right corner
 Enter the refresh token generated in the previous section
 Click Execute
@@ -217,6 +219,7 @@ http POST http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{r
 Before any CRUD functionalities can be carried out from the document endpoint, the user must be authorised using the access token.
 
 **From the Swagger User Interface**
+
 Copy access token from the api section
 Click "Authorise" at the top right corner of the page
 Enter access token and click log in. 
@@ -224,6 +227,7 @@ Enter access token and click log in.
 ### 4.4.1. Fetching Documents (List)
 
 **From the Swagger User Interface**
+
 Scroll to Document Section, then click "Try it out" on the right corner
 Click execute to return all documents created by the logged on user
 
@@ -234,6 +238,7 @@ http http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_toke
 ### 4.4.2. Fetching Documents (Specific)
 
 **From the Swagger User Interface**
+
 Scroll to relevant section under document, then click "Try it out" on the right corner
 Enter document id
 Click execute to return the document that matches the id entered.
@@ -248,6 +253,7 @@ http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer
 ### 4.4.3. Creating Docuemnets
 
 **From the Swagger User Interface**
+
 Scroll to relevant section, then click "Try it out" on the right corner
 Enter document title and document content
 Click execute to create new docuemnt
@@ -262,6 +268,7 @@ http POST http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access
 ### 4.4.4. Updating Documents
 
 **From the Swagger User Interface**
+
 Scroll to relevant section, then click "Try it out" on the right corner
 Enter document id
 make changed to the "document title" and "document content" fields as desired
@@ -279,6 +286,7 @@ http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authoriza
 ### 4.4.5. Deleting Documents
 
 **From the Swagger User Interface**
+
 Scroll to relevant section, then click "Try it out" on the right corner
 Enter document id, then click execute
 
@@ -340,6 +348,7 @@ Click execute to delete all data held on the logged on user
 ## 7. Microservices
 The CERN API has a feature that can query an external CERN document server using a search string
 **From the Swagger User Interface**
+
 Scroll to Microservice section, then click "Try it out" on the right corner
 Enter search string
 Click execute to return a list of documents on CERN document server matching the search string entered.
