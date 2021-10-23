@@ -74,8 +74,8 @@ All API endpoints for the CERN API application are available at the `/api/v1/{en
 
 Endpoint | HTTP Method | Action | Validity
 -- | -- | -- | --
-`authentication/token` | GET | Fetches an access and refresh token for the user with the provided login credentials. | 1 hour
-`authentication/token/refresh` | GET | Fetches a new access token for the user associated with the supplied refresh token. | 24 hours
+`authentication/token` | POST | Fetches an access and refresh token for the user with the provided login credentials. | 1 hour
+`authentication/token/refresh` | POST | Fetches a new access token for the user associated with the supplied refresh token. | 24 hours
 
 ### 2.2. Registration
 
@@ -103,7 +103,7 @@ Endpoint | HTTP Method | Action
 
 Endpoint | HTTP Method | Action 
 -- | -- | --
- microservices/<str:query>` | GET | Returns a list for a search string.
+ `microservices/<string:query>` | GET | Returns a list for a search string.
 
 ## 3. File Structure
 
@@ -152,66 +152,116 @@ When updating code, the above file tree can be refreshed by running the followin
 
 ## 4. Usage
 
-Detailed instructions on how to execute specific actions within this CERN API have been included below. **Please Note:** All instructions are based on using the HTTPie client on a development (localhost) copy of the application.
 
+Detailed instructions on how to execute specific actions within this CERN API have been included below. **Please Note:** Instructions are provided for the swagger user interface and the command line interface.
+
+To test from the command line interface, run the following command to install HTTPie client
+
+```bash
+pip install httpie
+```
+
+### 4.1. Registering a new user
+
+**Using the Swagger User Interface**
+
+On any web browser, navigate to http://127.0.0.1:8000/api/swagger/
+
+Under the register section, click try it out at the right corner, then enter username, password and email address
+
+Or
+
+**Using the command line interface**
+
+```bash
+http POST http://127.0.0.1:8000/api/v1/authentication/register/ username="{username}" password="{password}" email="{email}"
+```
+
+### 4.2. Requesting Access/Refresh Tokens
 **`{access_token}`** is the access token provided by the `/authentication/token/` or `/authentication/token/refresh/` endpoint. By default, access tokens have a **1** hour lifetime before they will need to be refreshed using the `/authentication/token/refresh/` endpoint using the `{refresh_token}` value (**1 day lifetime**).
 
 **Please Note:** [Refresh Token Rotation](https://auth0.com/docs/security/tokens/refresh-tokens/refresh-token-rotation) has been implemented in this application, therefore requesting a new access token using  the `/authentication/token/refresh/` endpoint will result in a new `{access_token}` value.
 
-### 4.1. Registering a new user
 
+**STEPS:**
+First, you have to login with the newly created username and password
 
+**From the Swagger Interface**
+Enter details under the api section, then click execute
+
+**From the command line interface**
 ```bash
-http http://127.0.0.1:8000/api/v1/authentication/register/
+http POST http://127.0.0.1:8000/api/v1/authentication/token/ username="{username}" password="{password}"
 ```
-
-### 4.2. Requesting Access/Refresh Tokens
-
-
-
-```bash
-http http://127.0.0.1:8000/api/v1/authentication/token/ username="{username}" password="{password}"
-```
-
 **`{username}`** is the username associated with the account you wish to use.
 **`{password}`** is the password associated with the account you wish to use.
 
+After successful login, access and refresh tokens are generated.
+
 ### 4.3. Refreshing Access Tokens
+**From Swagger Interface**
+Scroll to token refresh under the api section, click "Try it out" on the right corner
+Enter the refresh token generated in the previous section
+Click Execute
 
-
+**From the command line interface**
 ```bash
-http http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{refresh_token}"
+http POST http://127.0.0.1:8000/api/v1/authentication/token/refresh/ refresh="{refresh_token}"
 ```
 
-**`{refresh_token}`** is provided by the ``/api/v1/authentication/token/`` endpoint and is used to regenerate a new access token. The refresh token value is valid for 1 day from the point of generation.
+**`{refresh_token}`** is provided by the ``/api/v1/authentication/token/refresh`` endpoint and is used to regenerate a new access token when 1 hour period has elapsed on the original token. The refresh token value is valid for 1 day from the point of generation.
 
-### 4.4. Fetching Documents (List)
+### 4.4. Documents
+Before any CRUD functionalities can be carried out from the document endpoint, the user must be authorised using the access token.
 
+**From Swagger Interface**
+Copy access token from the api section
+Click "Authorise" at the top right corner of the page
+Enter access token and click log in. 
 
+### 4.4.1. Fetching Documents (List)
+**From Swagger Interface**
+Scroll to Document Section, then click "Try it out" on the right corner
+Click execute to return all documents created by the logged on user
+
+**From Command line**
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_token}"
 ```
+### 4.4.2. Fetching Documents (Specific)
+**From Swagger Interface**
+Scroll to relevant section under document, then click "Try it out" on the right corner
+Enter document id
+Click execute to return the document that matches the id entered.
 
-### 4.5. Fetching Documents (Specific)
-
-
+**From Command line**
 ```bash
 http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
 
 **`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the API.
 
-### 4.6. Creating Documents
+### 4.4.3. Creating Docuemnets
+**From Swagger Interface**
+Scroll to relevant section, then click "Try it out" on the right corner
+Enter document title and document content
+Click execute to create new docuemnt
+**Please Note: A unique document id, date and time of creation is automatically generated for every document created**
 
-
+**From Command line**
 
 ```bash
 http POST http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_token}"
 ```
 
-### 4.7. Updating Documents
+### 4.4.4. Updating Documents
+**From Swagger Interface**
+Scroll to relevant section, then click "Try it out" on the right corner
+Enter document id
+make changed to the "document title" and "document content" fields as desired
+Click execute to display changes to document.
 
-
+**From Command line**
 
 ```bash
 http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
@@ -220,20 +270,24 @@ http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authoriza
 **`{PATCH/PUT}`** refers to the appropriate HTTP verb based on the data you wish to amend. ``PATCH`` should be used for a partial update, whereas ``PUT`` should be used for a full update.
 **`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the API.
 
-### 4.8. Deleting Documents
+### 4.4.5. Deleting Documents
 
+**From Swagger Interface**
+Scroll to relevant section, then click "Try it out" on the right corner
+Enter document id, then click execute
 
+**From Command line**
 ```bash
 http DELETE http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer {access_token}"
 ```
 
 **`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the API.
 
-## 5. Additional Endpoint Parameters
+## 4.4.6. Additional Endpoint Parameters
 
 This solution contains **pagination** and **filter** functionalities, which can be used on all endpoints used to fetch large volumes of data (For example `/api/v1/documents/`).
 
-### 5.1. Pagination
+**Pagination**
 
 The **pagination** parameter can be used to return a smaller dataset for endpoints which return large volumes of data. This can assist consuming applications by reducing the overall load/processing time of an API request.
 
@@ -242,11 +296,11 @@ GET Parameter | Example | Description
 `page` | `/api/v1/documents/?page=2` | The page number of the data you wish to fetch from the API. This value should be numeric. If this parameter is not supplied, the default will be **1**.
 `page_size` | `/api/v1/documents/?page_size=10` | The maximum number of items you wish the API to return in its response. If not supplied, the API will default to returning **5** items, the maximum number which can be returned is **25**.
 
-### 5.2. Filtering
+**Filtering**
 
 The filtering functionality can be used to isolate records that match a specific set of criteria (For example, only documents created by John Doe). The filters can be applied by adding the required GET parameter to the end of the  endpoint URL (For example, `/api/v1/documents/?owner__username=Joe`). Filters can be combined to narrow a search down  even further, for example `/api/v1/documents/?owner__username=Kieron&title=hadron`.
 
-#### 5.2.1 Documents
+**Examples**
 
 GET Parameter | Example | Search Method | Description
 -- | -- | -- | --
@@ -254,10 +308,39 @@ GET Parameter | Example | Search Method | Description
 `document_content` | `/api/v1/documents/?document_content=lorem` | `iccontains` | The document content filter will return any values which contain a partial match to the document content stored within the database.
 `owner__username` | `/api/v1/documents/?owner__username=Joe` | `icontains` | The owner username filter will return any records which contain a full match to the owner username stored within the database.
 
-## 6. Other Features
+## 5. GDPR
+A user can request for all of their personal data held by the CERN API through a data access request. This will return all users personal details and the documents owned by the user.  A user could also request for their data to be deleted including their account. 
+
+## 5.1 Making a Data Access Request
+
+**From Swagger Interface**
+Scroll to the relevant section under GDPR, then click "Try it out" on the right corner
+Click execute to return all data held on the logged on user.
+
+**From the command line interface**
+
+
+## 5.2 Making a Data Erasure Request
+**From Swagger Interface**
+Scroll to relevant section under GDPR, then click "Try it out" on the right corner
+Click execute to delete all data held on the logged on user
+**Please Note:** user account will be deleted and user will be automatically logged out.
+
+**From the command line interface**
+
+## 6. Microservices
+The CERN API has a feature that can query an external CERN document server using a search string
+**From Swagger Interface**
+Scroll to Microservice section, then click "Try it out" on the right corner
+Enter search string
+Click execute to return a list of documents on CERN document server matching the search string entered.
+
+**From the command line interface**
+
+## 7. Other Features
 This application includes a variety of additional security functions/features, all of which are listed within this section.
 
-### 6.1. Cross Origin Request Sharing (CORS)
+### 7.1. Cross Origin Request Sharing (CORS)
 CORS headers are automatically added to responses from this application through Django middleware. By default, only two origins are allowed:
 
 ```
@@ -267,17 +350,19 @@ CORS headers are automatically added to responses from this application through 
 
 In order to add additional origins, you should add the root URL to the `CORS_ALLOWED_ORIGINS` directive within the `settings.py` file.
 
-### 6.2. Request Throttling
+### 7.2. Request Throttling
 
 In order to prevent brute force attacks, this application enforces request throttling to ensure long-term availability and prevent abuse of resources. By default, Authenticated users are restricted to **100 requests per hour**, whereas non-authenticated users are restricted to **50 requests per hour**.
 
 This value can be changed by editing the `DEFAULT_THROTTLE_RATES` attribute of the `REST_FRAMEWORK` directive within the `settings.py` file.
 
-### 6.3. Password Validation
+### 7.3. Password Validation
 
 In order to prevent users from supplying commonly used passwords, upon registering for an account, the supplied password is checked against a list of [10k of the most commonly used passwords](https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10k-most-common.txt). In the event the users password is contained on this list, the register function will throw a ValidationError and display the appropriate output to the user.
 
-## 7. Testing
+In addition, the password field has been implemented with a regex such that it must be between 8 and 18 characters; A mixture of both uppercase and lowercase letters; A mixture of letters and number; and at least one special character (@$!%*#?&) is required
+
+## 8. Testing
 
 A comprehensive test suite has been built in accordance with the [Django Rest Framework Documentation](https://www.django-rest-framework.org/api-guide/testing/). In order to execute the supplied test suite, please execute the following command:
 
@@ -294,13 +379,13 @@ Python 3.8 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
 Python 3.9 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
 Python 3.10 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
 
-## 8. Contributors
+## 9. Contributors
 
 * [Kieron Holmes](https://github.com/KieronHolmes) - MSc Computer Science, University of Essex Online
 * [Sergio Zavarce](https://github.com/SerZav) - MSc Computer Science, University of Essex Online
 * [Kikelomo Obayemi](https://github.com/kikeobayemi) - MSc Computer Science, University of Essex Online
 
-## 9. External Packages and Modules Used
+## 10. External Packages and Modules Used
 * [Django](https://github.com/django/django) - Web Framework providing ORM functionality.
 * [Django REST Framework](https://github.com/encode/django-rest-framework) - REST Framework built upon the Django web framework.
 * [Django Filter](https://github.com/carltongibson/django-filter/) - Module providing the ability to filter models when executing a query.
