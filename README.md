@@ -161,15 +161,16 @@ To test from the command line interface, run the following command to install HT
 pip install httpie
 ```
 
+To access the user interface, navigate to http://127.0.0.1:8000 or localhost:8000/, then click API documentation to access the Swagger user interface
+
 ### 4.1. Registering a new user
 
-**Using the Swagger User Interface**
+**From the Swagger User Interface**
 
-On any web browser, navigate to http://127.0.0.1:8000/api/swagger/
+Scroll to the register section, click try it out at the right corner, then enter username, password, email address and role. 
+Defined roles are "guest", "admin", "researcher", "employee". Each role has defined privileges
+If the role field is not entered, the user role automatically defaults to guest.
 
-Under the register section, click try it out at the right corner, then enter username, password and email address
-
-Or
 
 **Using the command line interface**
 
