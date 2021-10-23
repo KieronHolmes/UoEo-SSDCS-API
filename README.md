@@ -320,6 +320,7 @@ A user can request for all of their personal data held by the CERN API through a
 ## 6.1 Making a Data Access Request
 
 **From the Swagger User Interface**
+
 Scroll to the relevant section under GDPR, then click "Try it out" on the right corner
 Click execute to return all data held on the logged on user.
 
@@ -329,6 +330,7 @@ Click execute to return all data held on the logged on user.
 ## 6.2 Making a Data Erasure Request
 
 **From the Swagger User Interface**
+
 Scroll to relevant section under GDPR, then click "Try it out" on the right corner
 Click execute to delete all data held on the logged on user
 **Please Note:** user account will be deleted and user will be automatically logged out.
