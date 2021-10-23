@@ -289,7 +289,7 @@ http DELETE http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization:
 
 **`{document_id}`** is the version 4 UUID value associated with a particular document which has been created within the API.
 
-## 4.4.6. Additional Endpoint Parameters
+## 5. Additional Endpoint Parameters
 
 This solution contains **pagination** and **filter** functionalities, which can be used on all endpoints used to fetch large volumes of data (For example `/api/v1/documents/`).
 
@@ -314,10 +314,10 @@ GET Parameter | Example | Search Method | Description
 `document_content` | `/api/v1/documents/?document_content=lorem` | `iccontains` | The document content filter will return any values which contain a partial match to the document content stored within the database.
 `owner__username` | `/api/v1/documents/?owner__username=Joe` | `icontains` | The owner username filter will return any records which contain a full match to the owner username stored within the database.
 
-## 5. GDPR
+## 6. GDPR
 A user can request for all of their personal data held by the CERN API through a data access request. This will return all users personal details and the documents owned by the user.  A user could also request for their data to be deleted including their account. 
 
-## 5.1 Making a Data Access Request
+## 6.1 Making a Data Access Request
 
 **From the Swagger User Interface**
 Scroll to the relevant section under GDPR, then click "Try it out" on the right corner
@@ -326,7 +326,7 @@ Click execute to return all data held on the logged on user.
 **From the Command Line Interface**
 
 
-## 5.2 Making a Data Erasure Request
+## 6.2 Making a Data Erasure Request
 
 **From the Swagger User Interface**
 Scroll to relevant section under GDPR, then click "Try it out" on the right corner
@@ -335,7 +335,7 @@ Click execute to delete all data held on the logged on user
 
 **From the Command Line Interface**
 
-## 6. Microservices
+## 7. Microservices
 The CERN API has a feature that can query an external CERN document server using a search string
 **From the Swagger User Interface**
 Scroll to Microservice section, then click "Try it out" on the right corner
@@ -344,10 +344,10 @@ Click execute to return a list of documents on CERN document server matching the
 
 **From the Command Line Interface**
 
-## 7. Other Features
+## 8. Other Features
 This application includes a variety of additional security functions/features, all of which are listed within this section.
 
-### 7.1. Cross Origin Request Sharing (CORS)
+### 8.1. Cross Origin Request Sharing (CORS)
 CORS headers are automatically added to responses from this application through Django middleware. By default, only two origins are allowed:
 
 ```
@@ -357,19 +357,19 @@ CORS headers are automatically added to responses from this application through 
 
 In order to add additional origins, you should add the root URL to the `CORS_ALLOWED_ORIGINS` directive within the `settings.py` file.
 
-### 7.2. Request Throttling
+### 8.2. Request Throttling
 
 In order to prevent brute force attacks, this application enforces request throttling to ensure long-term availability and prevent abuse of resources. By default, Authenticated users are restricted to **100 requests per hour**, whereas non-authenticated users are restricted to **50 requests per hour**.
 
 This value can be changed by editing the `DEFAULT_THROTTLE_RATES` attribute of the `REST_FRAMEWORK` directive within the `settings.py` file.
 
-### 7.3. Password Validation
+### 8.3. Password Validation
 
 In order to prevent users from supplying commonly used passwords, upon registering for an account, the supplied password is checked against a list of [10k of the most commonly used passwords](https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10k-most-common.txt). In the event the users password is contained on this list, the register function will throw a ValidationError and display the appropriate output to the user.
 
 In addition, the password field has been implemented with a regex such that it must be between 8 and 18 characters; A mixture of both uppercase and lowercase letters; A mixture of letters and number; and at least one special character (@$!%*#?&) is required
 
-## 8. Testing
+## 9. Testing
 
 A comprehensive test suite has been built in accordance with the [Django Rest Framework Documentation](https://www.django-rest-framework.org/api-guide/testing/). In order to execute the supplied test suite, please execute the following command:
 
@@ -386,13 +386,13 @@ Python 3.8 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
 Python 3.9 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
 Python 3.10 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
 
-## 9. Contributors
+## 10. Contributors
 
 * [Kieron Holmes](https://github.com/KieronHolmes) - MSc Computer Science, University of Essex Online
 * [Sergio Zavarce](https://github.com/SerZav) - MSc Computer Science, University of Essex Online
 * [Kikelomo Obayemi](https://github.com/kikeobayemi) - MSc Computer Science, University of Essex Online
 
-## 10. External Packages and Modules Used
+## 11. External Packages and Modules Used
 * [Django](https://github.com/django/django) - Web Framework providing ORM functionality.
 * [Django REST Framework](https://github.com/encode/django-rest-framework) - REST Framework built upon the Django web framework.
 * [Django Filter](https://github.com/carltongibson/django-filter/) - Module providing the ability to filter models when executing a query.
