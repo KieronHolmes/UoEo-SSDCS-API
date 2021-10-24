@@ -164,7 +164,7 @@ To access the user interface, navigate to http://127.0.0.1:8000 or localhost:800
 **From the Swagger User Interface**
 
 Scroll to the register section, click try it out at the right corner, then enter username, password, email address and role. 
-Defined roles are "guest", "admin", "researcher", "employee". Each role has defined privileges
+Defined roles are "guest", "admin", "researcher", "employee". Each role has defined privileges.
 If the role field is not entered, the user role automatically defaults to guest.
 
 
@@ -200,8 +200,8 @@ After successful login, access and refresh tokens are generated.
 
 **From the Swagger User Interface**
 
-Scroll to token refresh under the api section, click "Try it out" on the right corner
-Enter the refresh token generated in the previous section
+Scroll to token refresh under the api section, click "Try it out" on the right corner.
+Enter the refresh token generated in the previous section.
 Click Execute
 
 **From the Command Line Interface**
@@ -216,15 +216,15 @@ Before any CRUD functionalities can be carried out from the document endpoint, t
 
 **From the Swagger User Interface**
 
-Copy access token from the api section
-Click "Authorise" at the top right corner of the page
+Copy access token from the api section.
+Click "Authorise" at the top right corner of the page.
 Enter access token and click log in. 
 
 ### 4.4.1. Fetching Documents (List)
 
 **From the Swagger User Interface**
 
-Scroll to Document Section, then click "Try it out" on the right corner
+Scroll to Document Section, then click "Try it out" on the right corner.
 Click execute to return all documents created by the logged on user
 
 **From the Command Line Interface**
@@ -235,8 +235,8 @@ http http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access_toke
 
 **From the Swagger User Interface**
 
-Scroll to relevant section under document, then click "Try it out" on the right corner
-Enter document id
+Scroll to relevant section under document, then click "Try it out" on the right corner.
+Enter document id.
 Click execute to return the document that matches the id entered.
 
 **From the Command Line Interface**
@@ -250,9 +250,9 @@ http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer
 
 **From the Swagger User Interface**
 
-Scroll to relevant section, then click "Try it out" on the right corner
-Enter document title and document content
-Click execute to create new docuemnt
+Scroll to relevant section, then click "Try it out" on the right corner.
+Enter document title and document content.
+Click execute to create new docuemnt.
 **Please Note: A unique document id, date and time of creation is automatically generated for every document created**
 
 **From the Command Line Interface**
@@ -265,9 +265,9 @@ http POST http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access
 
 **From the Swagger User Interface**
 
-Scroll to relevant section, then click "Try it out" on the right corner
-Enter document id
-make changed to the "document title" and "document content" fields as desired
+Scroll to relevant section, then click "Try it out" on the right corner.
+Enter document id.
+Make changed to the "document title" and "document content" fields as desired.
 Click execute to display changes to document.
 
 **From the Command Line Interface**
@@ -283,7 +283,7 @@ http {PATCH/PUT} http://127.0.0.1:8000/api/v1/documents/{document_id} "Authoriza
 
 **From the Swagger User Interface**
 
-Scroll to relevant section, then click "Try it out" on the right corner
+Scroll to relevant section, then click "Try it out" on the right corner.
 Enter document id, then click execute
 
 **From the Command Line Interface**
@@ -325,7 +325,7 @@ A user can request for all of their personal data held by the CERN API through a
 
 **From the Swagger User Interface**
 
-Scroll to the relevant section under GDPR, then click "Try it out" on the right corner
+Scroll to the relevant section under GDPR, then click "Try it out" on the right corner.
 Click execute to return all data held on the logged on user.
 
 **From the Command Line Interface**
@@ -335,14 +335,14 @@ Click execute to return all data held on the logged on user.
 
 **From the Swagger User Interface**
 
-Scroll to relevant section under GDPR, then click "Try it out" on the right corner
-Click execute to delete all data held on the logged on user
+Scroll to relevant section under GDPR, then click "Try it out" on the right corner.
+Click execute to delete all data held on the logged on user.
 **Please Note:** user account will be deleted and user will be automatically logged out.
 
 **From the Command Line Interface**
 
 ## 7. Microservices
-The CERN API has a feature that can query an external CERN document server using a search string
+The CERN API has a feature that can query an external CERN document server using a search string.
 **From the Swagger User Interface**
 
 Scroll to Microservice section, then click "Try it out" on the right corner
