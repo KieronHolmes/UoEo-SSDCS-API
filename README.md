@@ -349,7 +349,7 @@ Click execute to delete all data held on the logged on user.
 http DELETE http://127.0.0.1:8000/api/v1/gdpr/erasure-request/ "Authorization: Bearer {access_token}"
 ```
 
-## 7. Microservices
+## 7. Microservice
 The CERN API has a feature that can query an external CERN document server using a search string.
 **From the Swagger User Interface**
 
