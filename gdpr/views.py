@@ -1,10 +1,8 @@
-from drf_spectacular.utils import extend_schema, extend_schema_view
+from drf_spectacular.utils import extend_schema
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
-
-from authentication.models import CustomUser
 
 from .serializers import GDPRSerializer
 
@@ -37,6 +35,7 @@ class SubjectErasureRequestView(APIView):
     """
 
     permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = None
 
     @extend_schema(
         summary="Performs a Subject Erasure Request",

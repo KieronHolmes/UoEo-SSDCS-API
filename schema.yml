@@ -237,10 +237,6 @@ paths:
       summary: Gets a list of all documents.
       parameters:
       - in: query
-        name: document_content
-        schema:
-          type: string
-      - in: query
         name: owner__username
         schema:
           type: string
@@ -409,10 +405,11 @@ paths:
   /api/v1/gdpr/access-request/:
     get:
       operationId: api_v1_gdpr_access_request_list
-      description: A function to retrieve all data held about the currently logged
-        in user.
+      description: Performs a Subject Access Request with the currently logged in
+        users details.
+      summary: Performs a Subject Access Request.
       tags:
-      - api
+      - GDPR
       security:
       - jwtAuth: []
       responses:
@@ -424,10 +421,54 @@ paths:
                 items:
                   $ref: '#/components/schemas/GDPR'
           description: ''
+  /api/v1/gdpr/erasure-request/:
+    delete:
+      operationId: api_v1_gdpr_erasure_request_destroy
+      description: Deletes all the information held on the currently logged in user
+        (Including User Account).
+      summary: Performs a Subject Erasure Request
+      tags:
+      - GDPR
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/microservice/{query}:
+    get:
+      operationId: api_v1_microservice_retrieve
+      description: Searches the CERN Document Server for documents matching the given
+        query.
+      summary: Queries CERN Document Server
+      parameters:
+      - in: path
+        name: query
+        schema:
+          type: string
+        required: true
+      tags:
+      - Microservice
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+          description: ''
 components:
   schemas:
+    Author:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
     Document:
       type: object
+      description: Serializer class for Documents
       properties:
         id:
           type: string
@@ -485,6 +526,22 @@ components:
       - documents
       - id
       - username
+    Item:
+      type: object
+      properties:
+        title:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Author'
+      required:
+      - authors
+      - created_at
+      - title
     PaginatedDocumentList:
       type: object
       properties:
@@ -507,6 +564,7 @@ components:
             $ref: '#/components/schemas/Document'
     PatchedDocument:
       type: object
+      description: Serializer class for Documents
       properties:
         id:
           type: string
@@ -532,6 +590,7 @@ components:
           readOnly: true
     Register:
       type: object
+      description: Class that validates and creates users using the CustomUser model
       properties:
         username:
           type: string
@@ -546,10 +605,34 @@ components:
         email:
           type: string
           format: email
+        role:
+          type: string
+          maxLength: 10
       required:
       - email
       - password
+      - role
       - username
+    Result:
+      type: object
+      properties:
+        query:
+          type: string
+        query_url:
+          type: string
+          readOnly: true
+        count:
+          type: integer
+          readOnly: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+      required:
+      - count
+      - query
+      - query_url
+      - results
     TokenObtainPair:
       type: object
       properties:
