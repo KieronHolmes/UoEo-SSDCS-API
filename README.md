@@ -2,7 +2,7 @@
 ![CodeQL Analysis Badge](https://github.com/KieronHolmes/UoEo-SSDCS-API/workflows/CodeQL/badge.svg)
 ![Django Test Status](https://github.com/KieronHolmes/UoEo-SSDCS-API/workflows/Django%20Tests/badge.svg)
 
-This GitHub repository contains code used in partial fulfillment of the Secure Software Development (Computer Science) module of the MSc Computer Science course at the University of Essex Online. The goal of this project is to develop an API which enables researchers at CERN safely store and access documents relating to the Large Hadron Collider experiments.
+This GitHub repository contains code used in partial fulfillment of the Secure Software Development (Computer Science) module of the MSc Computer Science course at the University of Essex Online. The goal of this project is to develop an API which enables researchers at CERN safely store and access documents relating to the Large Hadron Collider experiments. The Django REST framework has been chosen for the development of this project because of it security advantages over other common options. Django REST framwork handles many common security issues such as permission, user authentication and  by default offers protection against some of the OWASP 10 vulnerabilities such as cross site scripting and SQL injection (Veracode, 2018).
 
 ## Table of Contents
 
@@ -409,3 +409,6 @@ Python 3.10 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
 * [Django Filter](https://github.com/carltongibson/django-filter/) - Module providing the ability to filter models when executing a query.
 * [Django REST Framework - Simple JWT](https://github.com/jazzband/djangorestframework-simplejwt/) - Module providing the facility to use JWT for user authentication.
 * [HTTPie](https://github.com/httpie/httpie) - Simple CLI HTTP client used for testing.
+
+## 12. References
+* Veracode (2018) How Secure Are Popular Web Frameworks? Here Is a Comparison. Available from:https://www.veracode.com/blog/secure-development/how-secure-are-popular-web-frameworks-here-comparison [Accessed 14 October 2021]
