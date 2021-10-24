@@ -75,7 +75,7 @@ All API endpoints for the CERN API application are available at the `/api/v1/{en
 Endpoint | HTTP Method | Action | Validity
 -- | -- | -- | --
 `authentication/token` | POST | Fetches an access and refresh token for the user with the provided login credentials. | 1 hour
-`authentication/token/refresh` | POST | Fetches a new access token for the user associated with the supplied refresh token. | 24 hours
+`authentication/token/refresh` | POST | Fetches a new access token for the user associated with the supplied refresh token. | 1 day
 
 ### 2.2. Registration
 
