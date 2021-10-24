@@ -253,6 +253,7 @@ http http://127.0.0.1:8000/api/v1/documents/{document_id} "Authorization: Bearer
 Scroll to relevant section, then click "Try it out" on the right corner.
 Enter document title and document content.
 Click execute to create new docuemnt.
+
 **Please Note: A unique document id, date and time of creation is automatically generated for every document created**
 
 **From the Command Line Interface**
@@ -267,7 +268,7 @@ http POST http://127.0.0.1:8000/api/v1/documents/ "Authorization: Bearer {access
 
 Scroll to relevant section, then click "Try it out" on the right corner.
 Enter document id.
-Make changed to the "document title" and "document content" fields as desired.
+Make changes to the "document title" and "document content" fields as desired.
 Click execute to display changes to document.
 
 **From the Command Line Interface**
