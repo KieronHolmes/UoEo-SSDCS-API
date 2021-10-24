@@ -1,3 +1,6 @@
+"""
+Provides access to the Microservice functionality of the system.
+"""
 from json.decoder import JSONDecodeError
 
 import requests
@@ -13,7 +16,7 @@ from .serializers import ResultSerializer
 class MicroserviceSearchView(APIView):
     """
     get:
-        x
+        Fetches information from the remote CERN Document Server based on the user query.
     """
 
     permission_classes = (permissions.IsAuthenticated,)
@@ -25,6 +28,9 @@ class MicroserviceSearchView(APIView):
         tags=["Microservice"],
     )
     def get(self, request, *args, **kwargs):
+        """
+        Handles the processing and formatting of data between the client and the remote CERN API.
+        """
         status_response = status.HTTP_200_OK
         try:
             req = requests.get(

@@ -1,3 +1,6 @@
+"""
+Tests the User registration functionality.
+"""
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -6,6 +9,9 @@ from .models import CustomUser
 
 
 class RegisterTests(APITestCase):
+    """
+    Class to group the Registration tests.
+    """
     def test_register_valid(self):
         """
         Register a valid user account.
@@ -87,29 +93,3 @@ class RegisterTests(APITestCase):
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(CustomUser.objects.count(), 1)
-
-
-class GetTokenTests(APITestCase):
-    def test_get_token_valid_user(self):
-        """
-        Ensures a valid user is able to fetch an Access & Refresh token.
-        """
-        self.assertEqual(1, 1)
-
-    def test_get_tokens_invalid_user(self):
-        """
-        Ensures an invalid user is unable to fetch Access & Refresh tokens.
-        """
-        self.assertEqual(1, 1)
-
-    def test_refresh_token_valid(self):
-        """
-        Ensures a valid user is able to refresh their tokens.
-        """
-        self.assertEqual(1, 1)
-
-    def test_refresh_token_invalid(self):
-        """
-        Ensures an invalid user is unable to refresh their tokens.
-        """
-        self.assertEqual(1, 1)
