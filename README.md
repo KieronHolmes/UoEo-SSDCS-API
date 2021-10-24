@@ -155,11 +155,7 @@ When updating code, the above file tree can be refreshed by running the followin
 
 Detailed instructions on how to execute specific actions within this CERN API have been included below. **Please Note:** Instructions are provided for the swagger user interface and the command line interface.
 
-To test from the command line interface, run the following command to install HTTPie client
-
-```bash
-pip install httpie
-```
+The HTTP client has been included in the 'requirements.txt' file (earlier installed) to enable testing from the command line.
 
 To access the user interface, navigate to http://127.0.0.1:8000 or localhost:8000, then click API documentation to access the Swagger user interface
 
