@@ -5,9 +5,18 @@ from .models import Documents
 
 
 class DocumentSerializer(ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    """ Serializer class for Documents """
+
+    owner = serializers.ReadOnlyField(source="owner.username")
 
     class Meta:
         model = Documents
 
-        fields = ['id', 'title', 'document_content', 'created_at', 'updated_at', 'owner']
+        fields = [
+            "id",
+            "title",
+            "document_content",
+            "created_at",
+            "updated_at",
+            "owner",
+        ]

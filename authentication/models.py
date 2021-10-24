@@ -11,5 +11,4 @@ class CustomUser(AbstractUser):
     """ database definition that inherits from the AbstractUser """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    active = models.BooleanField(default=False)
-    role = models.CharField(max_length=10, default="Guest")
+    role = models.CharField(max_length=10)

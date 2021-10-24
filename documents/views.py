@@ -6,6 +6,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from .filters import DocumentFilter
 from .models import Documents
 from .pagination import CustomPagination
+from .permissions import UserHasAccessToDocument
 from .serializers import DocumentSerializer
 
 
@@ -23,10 +24,7 @@ from .serializers import DocumentSerializer
 )
 class DocumentList(ListCreateAPIView):
     """
-    get:
-        x
-    post:
-        x
+    API for Document retrieval for a list of documents with specific filters
     """
 
     serializer_class = DocumentSerializer
@@ -40,6 +38,13 @@ class DocumentList(ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
+        """
+        List all documents:
+        Allows users with admin or employee privileges to access all documents
+        otherwise, it will show only documents owned by the authenticated user
+        """
+        if self.request.user.role.lower() in ["admin", "employee"]:
+            return Documents.objects.all()
         return Documents.objects.filter(owner=self.request.user)
 
 
@@ -67,22 +72,23 @@ class DocumentList(ListCreateAPIView):
 )
 class DocumentDetailView(RetrieveUpdateDestroyAPIView):
     """
-    get:
-        x
-
-    put:
-        x
-
-    patch:
-        x
-
-    delete:
-        x
+    API for Document retrieval for one specific document
     """
 
     serializer_class = DocumentSerializer
+    # using
     permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (UserHasAccessToDocument,)
+
     lookup_field = "id"
 
     def get_queryset(self):
+        """
+        GET specific document
+        Allows users with admin or employee privileges to access all documents
+        otherwise, it will show only documents owned by the authenticated user
+        """
+
+        if self.request.user.role.lower() in ["admin", "employee"]:
+            return Documents.objects.all()
         return Documents.objects.filter(owner=self.request.user)
