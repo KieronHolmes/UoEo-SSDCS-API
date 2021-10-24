@@ -12,6 +12,7 @@ class ItemSerializer(serializers.Serializer):
     created_at = serializers.DateTimeField()
     authors = AuthorSerializer(many=True)
 
+
 class ResultSerializer(serializers.Serializer):
     query = serializers.CharField()
     query_url = serializers.SerializerMethodField()
