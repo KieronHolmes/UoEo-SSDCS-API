@@ -10,7 +10,9 @@ class Documents(models.Model):
     document_content = EncryptedTextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    owner = models.ForeignKey('authentication.CustomUser', related_name="documents", on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        "authentication.CustomUser", related_name="documents", on_delete=models.CASCADE
+    )
 
     class Meta:
-        ordering = ['-updated_at']
+        ordering = ["-updated_at"]

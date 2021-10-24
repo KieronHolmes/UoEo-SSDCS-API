@@ -1,6 +1,6 @@
-from rest_framework import serializers
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
+from rest_framework import serializers
 
 
 class AuthorSerializer(serializers.Serializer):
@@ -11,6 +11,7 @@ class ItemSerializer(serializers.Serializer):
     title = serializers.CharField()
     created_at = serializers.DateTimeField()
     authors = AuthorSerializer(many=True)
+
 
 class ResultSerializer(serializers.Serializer):
     query = serializers.CharField()
