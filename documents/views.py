@@ -1,13 +1,15 @@
 from django_filters import rest_framework as filters
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import permissions
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (ListCreateAPIView,
+                                     RetrieveUpdateDestroyAPIView)
 
 from .filters import DocumentFilter
 from .models import Documents
 from .pagination import CustomPagination
-from .serializers import DocumentSerializer
 from .permissions import UserHasAccessToDocument
+from .serializers import DocumentSerializer
+
 
 @extend_schema_view(
     get=extend_schema(
