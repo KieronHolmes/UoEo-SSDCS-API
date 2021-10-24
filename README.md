@@ -6,33 +6,38 @@ This GitHub repository contains code used in partial fulfillment of the Secure S
 
 ## Table of Contents
 
-* [1. Installation]()
-* [2. Endpoints]()
-    - [2.1. Authentication]()
-    - [2.2. Registration]() 
-    - [2.3. Documents]()
-    - [2.4. GDPR]()
-    - [2.5  Microservices]()
-* [3. File Structure]()
-* [4. Usage]()
-  - [4.1. Registering a new user]()
-  - [4.2. Requesting Access/Refresh Tokens]()
-  - [4.3. Refreshing Access Tokens]()
-  - [4.4. Fetching Documents (List)]()
-  - [4.5. Fetching Documents (Specific)]()
-  - [4.6. Creating Documents]()
-  - [4.7. Updating Documents]()
-  - [4.8. Deleting Documents]()
-  - [4.9  Data access request]()
-  - [4.10 Data erasure request]()
-* [5. Additional Endpoint Parameters]()
-* [6. Other Features]()
-  - [6.1. Cross Origin Request Sharing (CORS)]()
-  - [6.2. Request Throttling]()
-  - [6.3. Password Validation]()
-* [7. Testing]()
-* [8. Contributors]()
-* [9. External Packages and Modules Used]()
+- [1. Installation](#1-installation)
+- [2. Endpoints](#2-endpoints)
+  * [2.1. Authentication](#21-authentication)
+  * [2.2. Registration](#22-registration)
+  * [2.3. Documents](#23-documents)
+  * [2.4. GDPR](#24-gdpr)
+  * [2.5. Microservices](#25-microservices)
+- [3. File Structure](#3-file-structure)
+- [4. Usage](#4-usage)
+  * [4.1. Registering a new user](#41-registering-a-new-user)
+  * [4.2. Requesting Access/Refresh Tokens](#42-requesting-accessrefresh-tokens)
+  * [4.3. Refreshing Access Tokens](#43-refreshing-access-tokens)
+  * [4.4. Documents](#44-documents)
+  * [4.4.1. Fetching Documents (List)](#441-fetching-documents-list)
+  * [4.4.2. Fetching Documents (Specific)](#442-fetching-documents-specific)
+  * [4.4.3. Creating Docuemnets](#443-creating-docuemnets)
+  * [4.4.4. Updating Documents](#444-updating-documents)
+  * [4.4.5. Deleting Documents](#445-deleting-documents)
+- [5. Additional Endpoint Parameters](#5-additional-endpoint-parameters)
+- [6. GDPR](#6-gdpr)
+- [6.1 Making a Data Access Request](#61-making-a-data-access-request)
+- [6.2 Making a Data Erasure Request](#62-making-a-data-erasure-request)
+- [7. Microservice](#7-microservice)
+- [8. Other Features](#8-other-features)
+  * [8.1. Cross Origin Request Sharing (CORS)](#81-cross-origin-request-sharing-cors)
+  * [8.2. Request Throttling](#82-request-throttling)
+  * [8.3. Password Validation](#83-password-validation)
+  * [8.4. Field Encryption](#84-field-encryption)
+- [9. Testing](#9-testing)
+- [10. Contributors](#10-contributors)
+- [11. External Packages and Modules Used](#11-external-packages-and-modules-used)
+- [12. References](#12-references)
 
 ## 1. Installation
 
@@ -311,14 +316,13 @@ GET Parameter | Example | Description
 
 **Filtering**
 
-The filtering functionality can be used to isolate records that match a specific set of criteria (For example, only documents created by John Doe). The filters can be applied by adding the required GET parameter to the end of the  endpoint URL (For example, `/api/v1/documents/?owner__username=Joe`). Filters can be combined to narrow a search down  even further, for example `/api/v1/documents/?owner__username=Kieron&title=hadron`.
+The filtering functionality can be used to isolate records that match a specific set of criteria (For example, only documents created by John Doe). The filters can be applied by adding the required GET parameter to the end of the  endpoint URL (For example, `/api/v1/documents/?owner__username=Joe`). Filters can be combined to narrow a search down  even further, for example `/api/v1/documents/?owner__username=Kieron&title=hadron`. As `document_content` is an encrypted field, this is not usable within the filter query.
 
 **Examples**
 
 GET Parameter | Example | Search Method | Description
 -- | -- | -- | --
 `title` | `/api/v1/documents/?title=hadron` | `icontains` | The title filter will return any values which contain a partial match to the title stored in the database. For example, the supplied example endpoint will return records that contain the word hadron, such as "large hadron collider", "hadron research".
-`document_content` | `/api/v1/documents/?document_content=lorem` | `iccontains` | The document content filter will return any values which contain a partial match to the document content stored within the database.
 `owner__username` | `/api/v1/documents/?owner__username=Joe` | `icontains` | The owner username filter will return any records which contain a full match to the owner username stored within the database.
 
 ## 6. GDPR
@@ -388,6 +392,20 @@ In order to prevent users from supplying commonly used passwords, upon registeri
 
 In addition, the password field has been implemented with a regex such that it must be between 8 and 18 characters; A mixture of both uppercase and lowercase letters; A mixture of letters and number; and at least one special character (@$!%*#?&) is required
 
+### 8.4. Field Encryption
+
+In order to protect the sensitive research information provided by CERN researchers, the `document_content` field within the `documents` table is stored in an encrypted format. This is decrypted on runtime to fulfil API requests requiring such information.
+
+In a production environment, a new value should be supplied for the `FIELD_ENCRYPTION_KEY` attribute within the `settings.py` file. This is comprised of a Base64 encoded random 32 digit string, which can be generated using the following Python code:
+
+```python
+import os,base64
+
+print(base64.urlsafe_b64encode(os.urandom(32))
+```
+
+This function uses a form of **Symmetric Encryption** provided by the **Fernet** module of the Python **cryptography** library. In order for an attacker to gain access to the content, they would need to know/crack the encryption key.
+
 ## 9. Testing
 
 A comprehensive test suite has been built in accordance with the [Django Rest Framework Documentation](https://www.django-rest-framework.org/api-guide/testing/). In order to execute the supplied test suite, please execute the following command:
@@ -420,6 +438,7 @@ Python 3.10 (x64) | `ubuntu-latest`, `macos-latest`, `windows-latest`
 * [DRF-Spectacular](https://github.com/tfranzel/drf-spectacular) - Utility to provide the Swagger interface to the API.
 * [Faker](https://github.com/joke2k/faker) - Provides the facility to quickly get random data in a certain format (Emails, Phone Numbers etc.)
 * [Factory Boy](https://github.com/FactoryBoy/factory_boy) - Provides the facility to implement Model Factories for testing.
+* [Django Encrypted Fields](https://gitlab.com/lansharkconsulting/django/django-encrypted-model-fields/) - Provides the ability to have encrypted fields within a Django model.
 
 ## 12. References
 * Veracode (2018) How Secure Are Popular Web Frameworks? Here Is a Comparison. Available from:https://www.veracode.com/blog/secure-development/how-secure-are-popular-web-frameworks-here-comparison [Accessed 14 October 2021]
