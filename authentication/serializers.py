@@ -51,7 +51,9 @@ class RegisterSerializer(ModelSerializer):
         # list of valid roles. If empty, a Guest user is created.
         valid_roles = ["admin", "researcher", "employee"]
         if value.lower() not in valid_roles:
-            raise serializers.ValidationError("Invalid role. Allowed values: Admin / Researcher / Employee")
+            raise serializers.ValidationError(
+                "Invalid role. Allowed values: Admin / Researcher / Employee"
+            )
         return value
 
     def create(self, validated_data):
