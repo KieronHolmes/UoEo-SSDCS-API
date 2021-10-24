@@ -5,6 +5,8 @@ from .models import Documents
 
 
 class DocumentSerializer(ModelSerializer):
+    """ Serializer class for Documents """
+
     owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
