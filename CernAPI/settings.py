@@ -139,9 +139,7 @@ REST_FRAMEWORK = {
         "anon": "50/hour",
         "user": "100/hour",
     },
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
+    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
 }
 
 SPECTACULAR_SETTINGS = {

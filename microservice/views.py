@@ -5,8 +5,7 @@ from json.decoder import JSONDecodeError
 
 import requests
 from drf_spectacular.utils import extend_schema
-from requests.exceptions import (ConnectionError, HTTPError, RequestException,
-                                 Timeout)
+from requests.exceptions import ConnectionError, HTTPError, RequestException, Timeout
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
