@@ -2,7 +2,8 @@
 The URLs to be used under the /api/v1/authentication/ prefix.
 """
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView)
 
 from .views import RegisterView
 
