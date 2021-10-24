@@ -330,7 +330,9 @@ Scroll to the relevant section under GDPR, then click "Try it out" on the right 
 Click execute to return all data held on the logged on user.
 
 **From the Command Line Interface**
-
+```bash
+http GET http://127.0.0.1:8000/api/v1/gdpr/access-request/ "Authorization: Bearer {access_token}"
+```
 
 ## 6.2 Making a Data Erasure Request
 
@@ -341,6 +343,9 @@ Click execute to delete all data held on the logged on user.
 **Please Note:** user account will be deleted and user will be automatically logged out.
 
 **From the Command Line Interface**
+```bash
+http DELETE http://127.0.0.1:8000/api/v1/gdpr/erasure-request/ "Authorization: Bearer {access_token}"
+```
 
 ## 7. Microservices
 The CERN API has a feature that can query an external CERN document server using a search string.
@@ -351,6 +356,10 @@ Enter search string
 Click execute to return a list of documents on CERN document server matching the search string entered.
 
 **From the Command Line Interface**
+```bash
+http GET http://127.0.0.1:8000/api/v1/microservice/{query}/ "Authorization: Bearer {access_token}"
+```
+**`{query}`** represents the search term you wish to search for within the remote CERN Document Repository.
 
 ## 8. Other Features
 This application includes a variety of additional security functions/features, all of which are listed within this section.
@@ -389,10 +398,10 @@ python manage.py test
 
 Python Version | Operating System
 -- | --
-Python 3.7 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
-Python 3.8 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
-Python 3.9 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
-Python 3.10 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
+Python 3.7 (x64) | `ubuntu-latest`, `macos-latest`, `windows-latest`
+Python 3.8 (x64) | `ubuntu-latest`, `macos-latest`, `windows-latest`
+Python 3.9 (x64) | `ubuntu-latest`, `macos-latest`, `windows-latest`
+Python 3.10 (x64) | `ubuntu-latest`, `macos-latest`, `windows-latest`
 
 ## 10. Contributors
 
@@ -406,6 +415,9 @@ Python 3.10 (x64) | `ubuntu-latest`, `macos-latest', `windows-latest`
 * [Django Filter](https://github.com/carltongibson/django-filter/) - Module providing the ability to filter models when executing a query.
 * [Django REST Framework - Simple JWT](https://github.com/jazzband/djangorestframework-simplejwt/) - Module providing the facility to use JWT for user authentication.
 * [HTTPie](https://github.com/httpie/httpie) - Simple CLI HTTP client used for testing.
+* [DRF-Spectacular](https://github.com/tfranzel/drf-spectacular) - Utility to provide the Swagger interface to the API.
+* [Faker](https://github.com/joke2k/faker) - Provides the facility to quickly get random data in a certain format (Emails, Phone Numbers etc.)
+* [Factory Boy](https://github.com/FactoryBoy/factory_boy) - Provides the facility to implement Model Factories for testing.
 
 ## 12. References
 * Veracode (2018) How Secure Are Popular Web Frameworks? Here Is a Comparison. Available from:https://www.veracode.com/blog/secure-development/how-secure-are-popular-web-frameworks-here-comparison [Accessed 14 October 2021]
