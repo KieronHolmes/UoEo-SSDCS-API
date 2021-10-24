@@ -153,11 +153,13 @@ When updating code, the above file tree can be refreshed by running the followin
 ## 4. Usage
 
 
-Detailed instructions on how to execute specific actions within this CERN API have been included below. **Please Note:** Instructions are provided for the swagger user interface and the command line interface.
+Detailed instructions on how to execute specific actions within this CERN API have been included below. 
+
+**Please Note:** Instructions are provided for the Swagger User Interface and the Command Line Interface.
 
 The HTTP client has been included in the 'requirements.txt' file (earlier installed) to enable testing from the command line.
 
-To access the user interface, navigate to http://127.0.0.1:8000 or localhost:8000, then click API documentation to access the Swagger user interface
+To access the Swagger user interface, navigate to http://127.0.0.1:8000 or localhost:8000, then click API documentation 
 
 ### 4.1. Registering a new user
 
