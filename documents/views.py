@@ -6,8 +6,9 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from .filters import DocumentFilter
 from .models import Documents
 from .pagination import CustomPagination
-from .serializers import DocumentSerializer
 from .permissions import UserHasAccessToDocument
+from .serializers import DocumentSerializer
+
 
 @extend_schema_view(
     get=extend_schema(
@@ -45,6 +46,7 @@ class DocumentList(ListCreateAPIView):
         if self.request.user.role.lower() in ["admin", "employee"]:
             return Documents.objects.all()
         return Documents.objects.filter(owner=self.request.user)
+
 
 @extend_schema_view(
     get=extend_schema(
