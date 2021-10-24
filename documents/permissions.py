@@ -8,6 +8,7 @@ class UserHasAccessToDocument(permissions.BasePermission):
     """
     Determines whether a User can access the specified Document resource.
     """
+
     def has_object_permission(self, request, view, obj):
         """
         Determines whether the current user has access to the object requested.

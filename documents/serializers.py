@@ -11,12 +11,14 @@ class DocumentSerializer(ModelSerializer):
     """
     Class that serializes a Document item.
     """
+
     owner = serializers.ReadOnlyField(source="owner.username")
 
     class Meta:
         """
         Sets the Model and Fields to be used for serialization.
         """
+
         model = Documents
 
         fields = [

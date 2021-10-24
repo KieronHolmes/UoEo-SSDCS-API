@@ -12,6 +12,7 @@ class Documents(models.Model):
     Columns required for the Documents model.
     Upon user deletion, the Document item(s) associated will be deleted using the SQL CASCADE method.s
     """
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     document_content = EncryptedTextField()
@@ -25,4 +26,5 @@ class Documents(models.Model):
         """
         When displaying Document items, these should be ordered by the most recently updated by default.
         """
+
         ordering = ["-updated_at"]

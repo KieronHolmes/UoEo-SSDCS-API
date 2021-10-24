@@ -7,6 +7,7 @@ class AuthorSerializer(serializers.Serializer):
     """
     Class to handle Serialization of a speific author returned by the CERN API.
     """
+
     name = serializers.CharField()
 
 
@@ -14,6 +15,7 @@ class ItemSerializer(serializers.Serializer):
     """
     Class to handle Serialization of a specific item returned by the CERN API.
     """
+
     title = serializers.CharField()
     created_at = serializers.DateTimeField()
     authors = AuthorSerializer(many=True)
@@ -23,6 +25,7 @@ class ResultSerializer(serializers.Serializer):
     """
     Class to handle Serialization of the main result instance.
     """
+
     query = serializers.CharField()
     query_url = serializers.SerializerMethodField()
     count = serializers.SerializerMethodField()

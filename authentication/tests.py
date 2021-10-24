@@ -12,6 +12,7 @@ class RegisterTests(APITestCase):
     """
     Class to group the Registration tests.
     """
+
     def test_register_valid(self):
         """
         Register a valid user account.

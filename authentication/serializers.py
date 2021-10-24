@@ -23,6 +23,7 @@ class RegisterSerializer(ModelSerializer):
         """
         Specifies the model to be used for the serializer, the fields available and any other attribute modifiers to be used.s
         """
+
         model = CustomUser
 
         fields = ("username", "password", "email", "role")
