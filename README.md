@@ -97,7 +97,7 @@ Endpoint | HTTP Method | CRUD Method | Action | Authorization Method
 Endpoint | HTTP Method | Action 
 -- | -- | --
 `gdpr/access-request` | GET | Returns all data held on user.
-`gdpr/erasure-request` | DELETE | deletes all user data.
+`gdpr/erasure-request` | DELETE | Deletes all user data.
 
 ### 2.5. Microservices
 
