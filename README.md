@@ -168,12 +168,13 @@ To access the Swagger user interface, navigate to http://127.0.0.1:8000 or local
 
 ### 4.1. Registering a new user
 
+**Please Note:** Defined roles are "admin", "researcher" and "employee". A researcher can can create a new document 
+as well as read, update and delete their own document while an admin or employee has higher privileges to perform all functions on 
+all documents in the system.
+
 **From the Swagger User Interface**
 
 Scroll to the register section, click try it out at the right corner, then enter username, password, email address and role. 
-Defined roles are "guest", "admin", "researcher", "employee". Each role has defined privileges.
-If the role field is not entered, the user role automatically defaults to guest.
-
 
 **From the Command Line Interface**
 
