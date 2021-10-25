@@ -1,3 +1,6 @@
+"""
+Provides access to the Register functionality of the system.
+"""
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
@@ -17,7 +20,7 @@ from .serializers import RegisterSerializer
 class RegisterView(CreateAPIView):
     """
     post:
-        x
+        Provides an endpoint for a User to register for access to the system.
     """
 
     queryset = CustomUser.objects.all()

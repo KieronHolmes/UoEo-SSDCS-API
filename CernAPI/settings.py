@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-q&pnr3ulml*+kb^qh2mxe^z+o@b3ks&@eq%ajh5hl30+d3(ptx
 FIELD_ENCRYPTION_KEY = "U3CC3yITun2Ucnc4i4IvbyuSLib2futhv2-ut9zEhe8="
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
+    "encrypted_model_fields",
     "drf_spectacular",
     "welcome",
 ]
@@ -138,6 +139,7 @@ REST_FRAMEWORK = {
         "anon": "50/hour",
         "user": "100/hour",
     },
+    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
 }
 
 SPECTACULAR_SETTINGS = {

@@ -1,3 +1,6 @@
+"""
+Provides access to the Documents functionality of the system.
+"""
 from django_filters import rest_framework as filters
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import permissions
@@ -24,7 +27,10 @@ from .serializers import DocumentSerializer
 )
 class DocumentList(ListCreateAPIView):
     """
-    API for Document retrieval for a list of documents with specific filters
+    get:
+        Returns a list of all documents which the current user has permission to access.
+    post:
+        Allows the creation of a new Document item.
     """
 
     serializer_class = DocumentSerializer
@@ -35,13 +41,16 @@ class DocumentList(ListCreateAPIView):
     queryset = Documents.objects.none()
 
     def perform_create(self, serializer):
+        """
+        Sets the Owner attribute after the user has submitted the request.
+        """
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
         """
-        List all documents:
-        Allows users with admin or employee privileges to access all documents
-        otherwise, it will show only documents owned by the authenticated user
+        Restricts returned items to those the currently logged in user has access to.
+        Admin/Employees are able to view all Documents currently on the system, whereas Researchers can only view items
+        that they own.
         """
         if self.request.user.role.lower() in ["admin", "employee"]:
             return Documents.objects.all()
@@ -72,11 +81,17 @@ class DocumentList(ListCreateAPIView):
 )
 class DocumentDetailView(RetrieveUpdateDestroyAPIView):
     """
-    API for Document retrieval for one specific document
+    get:
+        Allows the user to get a specific Document item.
+    put:
+        Performs a full update to the Document attributes.
+    patch:
+        Performs a partial update to the Document attributes.
+    delete:
+        Deletes the Document item with the specified ID.
     """
 
     serializer_class = DocumentSerializer
-    # using
     permission_classes = (permissions.IsAuthenticated,)
     permission_classes = (UserHasAccessToDocument,)
 
@@ -84,11 +99,10 @@ class DocumentDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         """
-        GET specific document
-        Allows users with admin or employee privileges to access all documents
-        otherwise, it will show only documents owned by the authenticated user
+        Restricts returned items to those the currently logged in user has access to.
+        Admin/Employees are able to view all Documents currently on the system, whereas Researchers can only view items
+        that they own.
         """
-
         if self.request.user.role.lower() in ["admin", "employee"]:
             return Documents.objects.all()
         return Documents.objects.filter(owner=self.request.user)

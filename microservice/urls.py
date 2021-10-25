@@ -1,3 +1,6 @@
+"""
+The URLs to be used under the /api/v1/microservice/ prefix.
+"""
 from django.urls import path
 
 from .views import MicroserviceSearchView
