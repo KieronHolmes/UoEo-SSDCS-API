@@ -27,7 +27,7 @@ mccabe==0.6.1
 platformdirs==2.4.0
 pycparser==2.20
 Pygments==2.10.0
-PyJWT==2.1.0
+PyJWT==2.4.0
 pylint==2.11.1
 pyrsistent==0.18.0
 PySocks==1.7.1
