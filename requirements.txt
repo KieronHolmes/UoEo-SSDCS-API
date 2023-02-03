@@ -7,7 +7,7 @@ charset-normalizer==2.0.6
 colorama==0.4.4
 cryptography==35.0.0
 defusedxml==0.7.1
-Django==3.2.8
+Django==3.2.17
 django-cors-headers==3.10.0
 django-encrypted-model-fields==0.6.0
 django-filter==21.1
